@@ -19,6 +19,28 @@ if(phenotype_file == "NULL")
 	q()
 }
 
+message("Checking covariates: ", cov_file)
+
+if(cov_file == "NULL") 
+{
+	msg <- paste0("No covariate file has been provided.")
+	warninglist <- c(warninglist, msg)
+	message("WARNING: ", msg)
+	q()
+}
+
+message("Checking genotype fam file: ", genotype_ids)
+
+if(genotype_ids == "NULL") 
+{
+	msg <- paste0("No PLINK .fam file has been provided.")
+	warninglist <- c(warninglist, msg)
+	message("WARNING: ", msg)
+	q()
+}
+
+#Read in files
+
 ph <- fread(phenotype_file)
 p1 <- dim(ph)[1]
 p2 <- dim(ph)[2]
