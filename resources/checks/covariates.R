@@ -24,7 +24,7 @@ cov<-fread(cov_file, h=T)
 cov1<-dim(cov)[1]
 cov2<-dim(cov)[2]
 
-fam<-read.table("fam_file, h=F, stringsAsFactors=F)
+fam<-read.table(fam_file, h=F, stringsAsFactors=F)
 
 phen<-fread(phen_file, h=T)
 
