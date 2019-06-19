@@ -8,7 +8,6 @@ args <- (commandArgs(TRUE));
 cov_file <- as.character(args[1]);
 fam_file <- as.character(args[2]);
 phen_file <-as.character(args[3]);
-cohort_descriptives_files <- as.character(args[4])
 
 message("Checking covariates: ", cov_file)
 
@@ -113,18 +112,6 @@ if(length(age)<1)
   
   cov <- subset(cov, IID %in% commonids_cpg)
 
-cohort_summary <- list()
-cohort_summary$sample_size <- length(commonids_cpg)
-cohort_summary$n_males <- sum(cov$Sex == "1",na.rm=T)
-cohort_summary$n_females <- sum(cov$Sex == "0",na.rm=T)
-cohort_summary$mean_age <- mean(cov$Age,na.rm=T)
-cohort_summary$median_age <- median(cov$Age,na.rm=T)
-cohort_summary$sd_age <- sd(cov$Age,na.rm=T)
-cohort_summary$max_age <- max(cov$Age,na.rm=T)
-cohort_summary$min_age <- min(cov$Age,na.rm=T)
-cohort_summary$covariates <- names(cov)[-1]
-
-save(cohort_summary, file=cohort_descriptives_file)
 
 message("\n\nCompleted checks\n")
 
