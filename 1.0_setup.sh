@@ -65,7 +65,7 @@ fi
 if [ "$arg" = "genetics" ] || [ "$arg" = "all" ]
 then
 	section_message "covariates"
-	Rscript resources/checks/genetics.R \
+	Rscript resources/checks/genetic_data.R \
 		${bfile_raw}.bim \
 		${bfile_raw}.fam \
 		${quality_scores} \
