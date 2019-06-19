@@ -16,7 +16,7 @@ containsElement () {
 }
 
 arg="all"
-declare -a sections=('all' 'config' 'requirements')
+declare -a sections=('all' 'config' 'requirements' 'covariates' 'phenotypes')
 
 
 if [ -n "${1}" ]; then
@@ -63,13 +63,25 @@ fi
 
 #Check covariate file
 
+if [ "$arg" = "covariates" ] || [ "$arg" = "all" ]
+then
+	section_message "covariates"
+	Rscript resources/checks/covariates.R \
+		${covariates} \
+		${bfile_raw}.fam \
+		${phenotypes} \
+		${cov_descriptives}
+fi
+
 #Check phenotype file
 
 if [ "$arg" = "phenotypes" ] || [ "$arg" = "all" ]
 then
 	section_message "phenotypes"
-	Rscript resources/datacheck/phenotypes.R \
+	Rscript resources/checks/phenotypes.R \
 		${phenotypes} \
+		${covariates}
+		${bfile_raw}.fam
 		${phenotype_descriptives} \
 		${phenotype_list}
 fi
