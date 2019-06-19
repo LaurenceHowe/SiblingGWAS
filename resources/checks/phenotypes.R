@@ -43,9 +43,18 @@ if(length(commonids_mpc)<50)
 ph<-subset(ph, IID%in%commonids_pg)
 g_ids<-subset(g_ids, V2%in%commonids_pg)
 
-if(p2<2)
+sex <- names(ph)[-1]names(ph)[-1] %in% c("Sex")]
+if(length(sex)<1)
 	{
-	msg <-paste0("No phenotypes present.")
+	msg <-paste0("Sex is not present in the phenotype file. Please check that the columns are labelled correctly")
+	errorlist <-c(errorlist,msg)
+	warning("ERROR: ", msg)
+	}
+
+age <- names(ph)[-1]names(ph)[-1] %in% c("Age")]
+if(length(age)<1)
+	{
+	msg <-paste0("Age is not present in the phenotype file. Please check that the columns are labelled correctly")
 	errorlist <-c(errorlist,msg)
 	warning("ERROR: ", msg)
 	}
@@ -57,6 +66,49 @@ if(length(nom)<1)
 	errorlist <-c(errorlist,msg)
 	warning("ERROR: ", msg)
 	}
+
+if("Height" %in% nom)
+{
+	message("Checking Height")
+	m1 <- mean(ph$Height,na.rm=T)
+	age.mean<-mean(ph$Age,na.rm=T)
+	if((m1<1.0|m1>2.5)&age.mean>10)
+	{
+	msg <- paste0("please convert Height units to metres")
+	errorlist <- c(errorlist, msg)
+	warning("ERROR: ", msg)
+	}
+}
+
+if("Height" %in% nom)
+{
+	message("Checking Height")
+	m1 <- mean(ph$Height,na.rm=T)
+	age.mean<-mean(ph$Age,na.rm=T)
+	if((m1<0.2|m1>2.5)&age.mean<10)
+	{
+	msg <- paste0("please convert Height units to metres")
+	errorlist <- c(errorlist, msg)
+	warning("ERROR: ", msg)
+	}
+}
+
+if("BMI" %in% nom)
+{
+	message("Checking BMI")
+	m1<-mean(ph$BMI,na.rm=T)
+	age.mean<-mean(covar$Age,na.rm=T)
+	if((m1<10|m1>35)&age.mean>2)
+	{
+	msg <- paste0("please convert BMI units to kg/m2")
+	errorlist <- c(errorlist, msg)
+	warning("ERROR: ", msg)
+	}
+}
+
+write.table(names(ph)[-1], file=gwas_phenotype_list_file, row=F, col=F, qu=F)
+
+
 
 
 	
