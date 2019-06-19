@@ -111,7 +111,7 @@ if(length(age)<1)
   warning("ERROR: ", msg)
   }
   
-  covar <- subset(covar, IID %in% commonids_mgc)
+  cov <- subset(cov, IID %in% commonids_cpg)
 
 cohort_summary <- list()
 cohort_summary$sample_size <- length(commonids_cpg)
