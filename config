@@ -17,12 +17,12 @@ analyst_email="lh14833@bristol.ac.uk"
 home_directory="/mnt/storage/home/lh14833/Test/SiblingGWAS"
 
 bfile_raw="/mnt/storage/home/lh14833/Test/input_data/example"
-covariates="/mnt/storage/home/lh14833/Test/input-data/example-cov.txt"
-phenotypes="/mnt/storage/home/lh14833/Test/input-data/example-phen.txt"
+covariates="/mnt/storage/home/lh14833/Test/input_data/example-cov.txt"
+phenotypes="/mnt/storage/home/lh14833/Test/input_data/example-phen.txt"
 
 # Imputation quality scores
 # This should be a file with three columns, SNP, MAF and quality scores
-quality_scores="/mnt/storage/home/lh14833/Test/input-data/example-info.txt"
+quality_scores="/mnt/storage/home/lh14833/Test/input_data/example-info.txt"
 
 # DO NOT MODIFY
 
