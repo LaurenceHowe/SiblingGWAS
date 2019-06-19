@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# General details
+
+# Please make sure this is alphanumeric (underscores allowed)
+study_name="UK Biobank"
+
+# Analyst's name
+analyst_name="Laurence Howe"
+
+# Analyst's email address
+analyst_email="lh14833@bristol.ac.uk"
+
+# Please put the full path to this directory
+# e.g. you can find this by using the pwd command in the terminal
+
+home_directory="/mnt/storage/home/lh14833/Test"
+
+# DO NOT MODIFY
+
+source ${home_directory}/resources/parameters

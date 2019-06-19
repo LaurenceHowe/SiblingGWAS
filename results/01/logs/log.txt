@@ -1,0 +1,24 @@
+-----------------------------------------------
+
+config section
+
+to run this part on its own type:
+$ ./01-check_data.sh config
+
+-----------------------------------------------
+
+
+The study name 'UK Biobank' will be used for this analysis. Change this in the config file if necessary.
+
+-----------------------------------------------
+
+requirements section
+
+to run this part on its own type:
+$ ./01-check_data.sh requirements
+
+-----------------------------------------------
+
+
+Checking R version
+Checking that all required packages are present
