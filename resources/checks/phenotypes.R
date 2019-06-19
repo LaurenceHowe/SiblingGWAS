@@ -8,6 +8,7 @@ args <- (commandArgs(TRUE));
 phenotype_file <- as.character(args[1]);
 cov_file <- as.character(args[2]);
 genotype_ids <- as.character(args[3])
+gwas_phenotype_list_file <- as.character(args[4])
 
 message("Checking phenotypes: ", phenotype_file)
 
@@ -122,70 +123,9 @@ if("BMI" %in% nom)
 
 write.table(names(ph)[-1], file=gwas_phenotype_list_file, row=F, col=F, qu=F)
 
-cohort_summary <- list()
 
-m<-merge(ph, subset(cov, select=c(IID, Age, Sex)))
-
-if("Height" %in% names(ph))
-{
-	cohort_summary$Height_sample_size <- sum(!is.na(m$Height))
-	cohort_summary$Height_n_male <- sum(m$Sex == "1" & !is.na(m$Height))
-	cohort_summary$Height_n_female <- sum(m$Sex == "0" & !is.na(m$Height))
-	cohort_summary$Height_mean_age <- mean(m$Age[!is.na(m$Height)], na.rm=TRUE)
-	cohort_summary$mean_Height <- mean(m$Height,na.rm=T)
-	cohort_summary$median_Height <- median(m$Height,na.rm=T)
-	cohort_summary$sd_Height <- sd(m$Height,na.rm=T)
-	cohort_summary$max_Height <- max(m$Height,na.rm=T)
-	cohort_summary$min_Height <- min(m$Height,na.rm=T)
-	
-	cohort_summary$mean_Height_male <- mean(m$Height[m$Sex=="1"], na.rm=T)
-	cohort_summary$median_Height_male <- median(m$Height[m$Sex=="1"], na.rm=T)
-	cohort_summary$sd_Height_male <- sd(m$Height[m$Sex=="1"], na.rm=T)
-	cohort_summary$max_Height_male <- max(m$Height[m$Sex=="1"], na.rm=T)
-	cohort_summary$min_Height_male <- min(m$Height[m$Sex=="1"], na.rm=T)
-	
-	cohort_summary$mean_Height_female <- mean(m$Height[m$Sex=="0"], na.rm=T)
-	cohort_summary$median_Height_female <- median(m$Height[m$Sexr=="0"], na.rm=T)
-	cohort_summary$sd_Height_female <- sd(m$Height[m$Sex=="0"], na.rm=T)
-	cohort_summary$max_Height_female <- max(m$Height[m$Sex=="0"], na.rm=T)
-	cohort_summary$min_Height_female <- min(m$Height[m$Sex=="0"], na.rm=T)
-}
-
-if("BMI" %in% names(ph))
-{
-	cohort_summary$BMI_sample_size <- sum(!is.na(m$BMI))
-	cohort_summary$BMI_n_male <- sum(m$Sex == "1" & !is.na(m$BMI))
-	cohort_summary$BMI_n_female <- sum(m$Sex == "0" & !is.na(m$BMI))
-	cohort_summary$BMI_mean_age <- mean(m$Age[!is.na(m$BMI)], na.rm=TRUE)
-	cohort_summary$mean_BMI <- mean(m$BMI,na.rm=T)
-	cohort_summary$median_BMI <- median(m$BMI,na.rm=T)
-	cohort_summary$sd_BMI <- sd(m$BMI,na.rm=T)
-	cohort_summary$max_BMI <- max(m$BMI,na.rm=T)
-	cohort_summary$min_BMI <- min(m$BMI,na.rm=T)
-
-	cohort_summary$mean_BMI_male <- mean(m$BMI[m$Sex=="1"], na.rm=T)
-	cohort_summary$median_BMI_male <- median(m$BMI[m$Sex=="1"], na.rm=T)
-	cohort_summary$sd_BMI_male <- sd(m$BMI[m$Sex=="1"], na.rm=T)
-	cohort_summary$max_BMI_male <- max(m$BMI[m$Sex=="1"], na.rm=T)
-	cohort_summary$min_BMI_male <- min(m$BMI[m$Sex=="1"], na.rm=T)
-	
-	cohort_summary$mean_BMI_female <- mean(m$BMI[m$Sex=="0"], na.rm=T)
-	cohort_summary$median_BMI_female <- median(m$BMI[m$Sex=="0"], na.rm=T)
-	cohort_summary$sd_BMI_female <- sd(m$BMI[m$Sex=="0"], na.rm=T)
-	cohort_summary$max_BMI_female <- max(m$BMI[m$Sex=="0"], na.rm=T)
-	cohort_summary$min_BMI_female <- min(m$BMI[m$Sex=="0"], na.rm=T)
-}
-
-save(cohort_summary, file=cohort_descriptives_file)
 message("\n\nCompleted checks\n")
 
-message("Summary of data:")
-for(i in 1:length(cohort_summary))
-{
-	a <- cohort_summary[[i]]
-	if(is.numeric(a)) a <- round(a, 2)
-	message(names(cohort_summary)[i], ": ", paste(a, collapse=", "))
-}
 
 if(length(warninglist) > 0)
 {
