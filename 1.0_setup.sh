@@ -59,6 +59,9 @@ then
 	section_message "requirements"
     Rscript resources/checks/packages.R
 fi
+#Check genotype file
+
+#Check covariate file
 
 #Check phenotype file
 
@@ -70,8 +73,6 @@ then
 		${phenotype_descriptives} \
 		${phenotype_list}
 fi
-
-#Check genotype file
 
 #Finish 
 
