@@ -32,11 +32,11 @@ if(genotype_ids == "NULL")
 
 #Read in files
 
-ph <- fread(phenotype_file)
+ph <- fread(phenotype_file, h=T)
 p1 <- dim(ph)[1]
 p2 <- dim(ph)[2]
-cov <-fread(cov_file)
-g_ids <- fread(genotype_ids.fam)
+cov <-fread(cov_file, h=T)
+g_ids <- read.table(genotype_ids, h=F, stringsAsFactors=F)
 
 #Check phenotype file
 
