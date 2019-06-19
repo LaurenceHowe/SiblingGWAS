@@ -81,7 +81,6 @@ then
 		${phenotypes} \
 		${covariates} \
 		${bfile_raw}.fam \
-		${phenotype_descriptives} \
 		${phenotype_list}
 fi
 
