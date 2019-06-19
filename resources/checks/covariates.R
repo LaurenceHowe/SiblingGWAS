@@ -37,7 +37,7 @@ if(names(cov)[1] !="IID")
 	warning("ERROR: ", msg)
 	}
 
-commonids_cpg <- Reduce(intersect, list(cov$IID, phen[,1], fam[,2]))
+commonids_cpg <- Reduce(intersect, list(cov$IID, phen$IID, fam[,2]))
 
 message("Number of samples with covariate, genetic and phenotype data: ", length(commonids_cpg))
 
@@ -57,7 +57,7 @@ if(length(commonids_cpg) < 50)
 
 #Check Sex
 
-sex <- names(cov)[-1]names(cov)[-1] %in% c("Sex")]
+sex <- names(cov)[-1][names(cov)[-1] %in% c("Sex")]
 if(length(sex)<1)
 	{
 	msg <-paste0("Sex is not present in the covariate file. Please check that the columns are labelled correctly")
@@ -72,17 +72,17 @@ if(any(is.na(cov$Sex)))
   warning("ERROR: ", msg)
   }
 
-index<-cov$Sex %in% c("M", "F")
+index<-cov$Sex %in% c("1", "0")
 if(any(!index))
   {
-  msg<-paste0("There are some values in the Sex column that are neither M nor F. Please categorise individuals as either M or F")
+  msg<-paste0("There are some values in the Sex column that are neither 0 (F) nor 1 (M). Please categorise Males as 1 and Females as 0")
   errorlist<-c(errorlist, msg)
   warning("ERROR: ", msg)
   }
   
 #Check Age
 
-age <- names(cov)[-1]names(cov)[-1] %in% c("Age")]
+age <- names(cov)[-1][names(cov)[-1] %in% c("Age")]
 if(length(age)<1)
 	{
 	msg <-paste0("Age is not present in the covariate file. Please check that the columns are labelled correctly")
@@ -114,14 +114,14 @@ if(length(age)<1)
   covar <- subset(covar, IID %in% commonids_mgc)
 
 cohort_summary <- list()
-cohort_summary$mqtl_sample_size <- length(commonids_cpg)
-cohort_summary$mqtl_n_males <- sum(cov$Sex_factor == "M",na.rm=T)
-cohort_summary$mqtl_n_females <- sum(cov$Sex_factor == "F",na.rm=T)
-cohort_summary$mqtl_mean_age <- mean(cov$Age_numeric,na.rm=T)
-cohort_summary$mqtl_median_age <- median(cov$Age_numeric,na.rm=T)
-cohort_summary$mqtl_sd_age <- sd(cov$Age_numeric,na.rm=T)
-cohort_summary$mqtl_max_age <- max(cov$Age_numeric,na.rm=T)
-cohort_summary$mqtl_min_age <- min(cov$Age_numeric,na.rm=T)
+cohort_summary$sample_size <- length(commonids_cpg)
+cohort_summary$n_males <- sum(cov$Sex == "1",na.rm=T)
+cohort_summary$n_females <- sum(cov$Sex == "0",na.rm=T)
+cohort_summary$mean_age <- mean(cov$Age,na.rm=T)
+cohort_summary$median_age <- median(cov$Age,na.rm=T)
+cohort_summary$sd_age <- sd(cov$Age,na.rm=T)
+cohort_summary$max_age <- max(cov$Age,na.rm=T)
+cohort_summary$min_age <- min(cov$Age,na.rm=T)
 cohort_summary$covariates <- names(cov)[-1]
 
 save(cohort_summary, file=cohort_descriptives_file)
