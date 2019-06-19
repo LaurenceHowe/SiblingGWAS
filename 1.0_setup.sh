@@ -62,6 +62,15 @@ fi
 
 #Check phenotype file
 
+if [ "$arg" = "phenotypes" ] || [ "$arg" = "all" ]
+then
+	section_message "phenotypes"
+	Rscript resources/datacheck/phenotypes.R \
+		${phenotypes} \
+		${phenotype_descriptives} \
+		${phenotype_list}
+fi
+
 #Check genotype file
 
 #Finish 
