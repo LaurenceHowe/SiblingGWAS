@@ -6,7 +6,6 @@ suppressMessages(library(matrixStats))
 
 args <- (commandArgs(TRUE));
 phenotype_file <- as.character(args[1]);
-covariates_file <- as.character(args[2]);
 
 message("Checking phenotypes: ", phenotype_file)
 
