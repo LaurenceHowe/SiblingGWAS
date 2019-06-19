@@ -60,4 +60,12 @@ then
     Rscript resources/checks/packages.R
 fi
 
+#Finish 
+
+if [ "$arg" = "all" ]
+then
+        echo ""
+        echo ""
+        echo "You successfully performed all data checks!"
+fi
 
