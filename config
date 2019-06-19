@@ -16,7 +16,7 @@ analyst_email="lh14833@bristol.ac.uk"
 
 home_directory="/mnt/storage/home/lh14833/Test"
 
-bfile_raw="${home_directory}/input_data/Siblings_03"
+bfile_raw="${home_directory}/input_data/Siblings.03"
 covariates="${home_directory}/input_data/Sibling-height.txt"
 phenotypes="${home_directory}/input_data/Sibling-height.txt"
 
