@@ -60,6 +60,10 @@ then
     Rscript resources/checks/packages.R
 fi
 
+#Check phenotype file
+
+#Check genotype file
+
 #Finish 
 
 if [ "$arg" = "all" ]
