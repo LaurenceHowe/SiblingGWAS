@@ -115,14 +115,6 @@ if(length(age)<1)
 
 message("\n\nCompleted checks\n")
 
-message("Summary of data:\n")
-for(i in 1:length(cohort_summary))
-{
-	a <- cohort_summary[[i]]
-	if(is.numeric(a)) a <- round(a, 2)
-	message(names(cohort_summary)[i], ": ", paste(a, collapse=", "))
-}
-
 if(length(warninglist) > 0)
 {
 	message("\n\nPlease take note of the following warnings, and fix and re-run the data check if you see fit:")
