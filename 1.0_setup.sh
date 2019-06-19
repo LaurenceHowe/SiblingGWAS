@@ -80,8 +80,8 @@ then
 	section_message "phenotypes"
 	Rscript resources/checks/phenotypes.R \
 		${phenotypes} \
-		${covariates}
-		${bfile_raw}.fam
+		${covariates} \
+		${bfile_raw}.fam \
 		${phenotype_descriptives} \
 		${phenotype_list}
 fi
