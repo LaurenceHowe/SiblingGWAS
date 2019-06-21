@@ -18,7 +18,7 @@ k=`printf "%02d" $j`
 
 #Convert to .raw
 plink \
---bfile /mnt/storage/home/lh14833/Test/example \
+--bfile /mnt/storage/home/lh14833/Test/input_data/example \
 --extract extract${k} \
 --recodeA \
 --out temp.${i}
