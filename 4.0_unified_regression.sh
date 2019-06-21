@@ -26,10 +26,12 @@ plink \
 #Run regression script in R
 Rscript resources/regression/unified_regression.R \
 temp.${i} \
+extract${k} \
 output.${i}
 
 #Remove .raw file
-rm temp.${i}*;
+rm temp.${i}*
+rm extract${k};
 done
 
 echo "Completed analysis"
