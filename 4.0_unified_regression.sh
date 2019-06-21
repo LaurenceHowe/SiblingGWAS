@@ -1,12 +1,12 @@
 echo "Partitioning genotype file"
 #Partition genotype file into chunks of 10,000 SNPs
-split -l10000 -d example.bim extract
+split -l5 -d example.bim extract
 
 #Number of SNPs in .bim file
 snpnumber=$(wc -l < example.bim)
 
 #Rounding for truncation and count number of files
-round=$(echo "$((snpnumber+999))")
+round=$(echo "$((snpnumber+4))")
 partitions=$(echo "$((round/n))")
 
 echo "Running analysis"
@@ -18,7 +18,7 @@ k=`printf "%02d" $j`
 
 #Convert to .raw
 plink \
---bfile example \
+--bfile /mnt/storage/home/lh14833/Test/example \
 --extract extract${k} \
 --recodeA \
 --out temp.${i}
