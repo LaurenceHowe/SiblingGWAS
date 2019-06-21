@@ -9,7 +9,7 @@ snpnumber=$(wc -l < /mnt/storage/home/lh14833/Test/input_data/example.bim)
 
 #Rounding for truncation and count number of files
 round=$(echo "$((snpnumber+4))")
-partitions=$(echo "$((round/n))")
+partitions=$(echo "$((round/5))")
 
 echo "Running analysis"
 #Run analysis on partitioned files
