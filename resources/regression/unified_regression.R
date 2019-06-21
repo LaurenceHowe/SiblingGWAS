@@ -1,0 +1,120 @@
+require(data.table)
+require(sandwich)
+require(lmtest)
+
+# import argument
+arguments <- commandArgs(trailingOnly = T)
+phenfile <- arguments[1]
+
+# load input filename
+filestart <- sub(".raw","", phenfile)
+
+# produce output filename
+outfile <- sub("data", "output", filestart)
+
+#---------------------------------------------------------------------------------------------#
+# Begin GWAS code:
+#---------------------------------------------------------------------------------------------#
+# Track time:
+time_start <- Sys.time()
+paste0("Running GWAS for: ", filestart, " | Started: ")
+time_start
+
+paste0("Loading genetic data")
+ped <- fread(rawfile, sep=" ")
+
+# Read in the SNP information
+paste0("Loading SNP info")
+bim <- fread(paste0(filestart,".bim"), sep="\t")
+
+# Read in the allele frequencies
+paste0("Loading Allele freq")
+freq <- fread(paste0(filestart,".frq"), sep="\t")
+
+# Create a new data.frame which will be filled with all necessary output information
+output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, CALLRATE=NA, MAF=freq$V1, N_CALLED=NA, N_REG=NA, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA)
+
+#---------------------------------------------------------------------------------------------#
+# loop over all SNPs in a chromosome (should take about 10 hrs)
+#---------------------------------------------------------------------------------------------#
+paste0("Looping...")
+ptm <- proc.time()
+
+# loop over all SNPs in a chromosome 
+for (i in 1:(ncol(ped)-6)) {
+    # Calculate the Callrate: for how many sibs the SNP is available
+    snp_ind <- i+6 
+    output$CALLRATE[i] <- sum(!is.na(ped[, snp_ind, with=FALSE]))/nrow(ped)
+    output$N_CALLED[i] <- nrow(ped) - sum(is.na(ped[, snp_ind, with=FALSE]))
+
+    # Make a matrix with: [FID PHENOTYPE] [individ - family mean ] [family mean]
+    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$PHENOTYPE, GENOTYPE=as.numeric(unlist(ped[,snp_ind,with=FALSE])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind,with=FALSE])), ped$FID, FUN=mean))
+    ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
+
+    # Run unified regression
+    fit <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE, data=ped3)
+
+    # Sample size in regression
+    output$N_REG[i] <- length(resid(fit))
+
+    # Save Beta information
+    output$BETA_0[i] <- fit$coefficients[1]
+    output$BETA_BF[i] <- fit$coefficients[2]
+    output$BETA_WF[i] <- fit$coefficients[3]
+
+    # save the variance covariance matrix
+    vcv_matrix = vcovCL(fit, cluster=ped3$FID)
+    if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
+        output$VCV_0[i] <-NA
+        output$VCV_0_BF[i] <-NA
+        output$VCV_0_WF[i] <-NA
+        output$VCV_BF[i] <-NA
+        output$VCV_BF_WF[i] <-NA
+        output$VCV_WF[i] <-NA
+    } else {
+        output$VCV_0[i] <- vcv_matrix[1,1]
+        output$VCV_0_BF[i] <- vcv_matrix[1,2]
+        output$VCV_0_WF[i] <- vcv_matrix[1,3]
+        output$VCV_BF[i] <- vcv_matrix[2,2]
+        output$VCV_BF_WF[i] <- vcv_matrix[2,3]
+        output$VCV_WF[i] <- vcv_matrix[3,3]
+    }
+
+    # save the clustered SE's and corresponding p-values
+    test_matrix <- coeftest(fit, vcov.=vcv_matrix)
+    if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
+        output$SE_BETA_0[i] <- NA
+        output$SE_BETA_BF[i] <- NA
+        output$SE_BETA_WF[i] <- NA
+        output$P_BETA_0[i] <- NA
+        output$P_BETA_BF[i] <- NA
+        output$P_BETA_WF[i] <- NA
+    } else {
+        output$SE_BETA_0[i] <- test_matrix[1,2] 
+        output$SE_BETA_BF[i] <- test_matrix[2,2] 
+        output$SE_BETA_WF[i] <- test_matrix[3,2] 
+        output$P_BETA_0[i] <- test_matrix[1,4] 
+        output$P_BETA_BF[i] <- test_matrix[2,4] 
+        output$P_BETA_WF[i] <- test_matrix[3,4] 
+    }
+
+    if(i %% 1000 == 0) {
+        print(paste0("Finished SNP ", i, " out of ",ncol(ped)-6)) 
+        print(Sys.time()) 
+    }
+}
+
+# Runtime:
+proc.time()-ptm
+
+# Write output:
+fwrite(output, file = paste0(outfile,"_WFunified_results.txt"), sep="\t")
+
+# Close out
+cat("Finished at: ")
+Sys.time() 
+cat("Elapsed time: ")
+Sys.time() - time_start
+
+# Exits R without storing the working space image
+q("no")
