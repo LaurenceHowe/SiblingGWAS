@@ -1,9 +1,9 @@
 echo "Partitioning genotype file"
 #Partition genotype file into chunks of 10,000 SNPs
-split -l5 -d example.bim extract
+split -l5 -d /mnt/storage/lh14833/Test/input_data/example.bim extract
 
 #Number of SNPs in .bim file
-snpnumber=$(wc -l < example.bim)
+snpnumber=$(wc -l < /mnt/storage/lh14833/Test/input_data/example.bim)
 
 #Rounding for truncation and count number of files
 round=$(echo "$((snpnumber+4))")
