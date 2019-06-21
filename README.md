@@ -55,7 +55,8 @@ This script runs the regressions in R.
 
 This script compiles the output into a final summary statistics file.
 
-
+<br>
+<br>
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
 Note scripts were adapted from scripts by Gibran Hemani & Sean Lee.
