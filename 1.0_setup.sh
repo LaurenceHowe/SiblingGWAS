@@ -16,7 +16,7 @@ containsElement () {
 }
 
 arg="all"
-declare -a sections=('all' 'config' 'requirements' 'genetics' 'covariates' 'phenotypes')
+declare -a sections=('all' 'config' 'requirements' 'genetics' 'siblings' 'covariates' 'phenotypes')
 
 
 if [ -n "${1}" ]; then
@@ -70,6 +70,15 @@ then
 		${bfile_raw}.fam \
 		${quality_scores} \
 		${controlsnps_file} 
+fi
+
+#Check siblings file
+#To be added in
+
+if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
+then
+	section_message "siblings"
+	
 fi
 
 #Check covariate file
