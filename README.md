@@ -5,10 +5,11 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 <b> INPUT FILES required: </b>
 1) Imputed genotype data in PLINK binary format (.bed .bim .fam). <br/>
 a) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
-b) Genotype data should be on build 37. <br/>
-c) Genotype data should be merged into one file across chromosomes. <br/>
-d) Chromosomes should be numbered 1-23 in .bim file. <br/>
-e) Filtered variants such that INFO > 0.3 & MAF > 0.01. <br/>
+b) Siblings are defined as follows: <br/>
+c) Genotype data should be on build 37. <br/>
+d) Genotype data should be merged into one file across chromosomes. <br/>
+e) Chromosomes should be numbered 1-23 in .bim file. <br/>
+f) Filtered variants such that INFO > 0.3 & MAF > 0.01. <br/>
 
 2) Covariate file in tab delimited format. <br/>
 a) First column should be IID. <br/>
@@ -24,6 +25,11 @@ a) First column should be SNP id. <br/>
 b) Second column should be minor allele frequency. <br/>
 c) Third column should be INFO score. <br/>
 
+<b> OUTPUT </b>
+
+Summary statistics file with:
+SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
+
 <b> config file </b>
 
 File to be edited with paths to relevant input files. <br/>
@@ -35,17 +41,17 @@ The set-up script runs checks to ensure that the input files are in the correct 
 
 <b> 2.0_phenotypes </b>
 
+The phenotypes script extracts summary data on available phenotypes.
+
+<b> 3.0_genotypes </b>
+
+The genotypes script extracts summary data on the genotype data.
+
 <i> 1.0_convert_data </i> prepares the genetic data for analysis and extracts relevant information on variants (e.g. MAF).
 
 <i> 2.0_unified_regression </i> runs the regressions in R.
 
 <i> 3.0_merge_results </i> merges the files across chromosomes into a final summary statistics file.
-
-<b> OUTPUT </b>
-
-Summary statistics file with:
-SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
-
 
 
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
