@@ -25,7 +25,7 @@ plink \
 
 #Run regression script in R
 Rscript resources/regression/unified_regression.R \
-temp.${i} \
+temp.${i}.raw \
 extract${k} \
 output.${i}
 
