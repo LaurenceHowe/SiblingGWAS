@@ -11,7 +11,7 @@ partitions=$(echo "$((round/n))")
 
 echo "Running analysis"
 #Run analysis on partitioned files
-for i in $(seq 1 $partitions); do
+for i in $((seq 1 $partitions)); do
 (
 j=$(echo "$((i-1))")
 k=`printf "%02d" $j`
