@@ -27,7 +27,7 @@ c) Third column should be INFO score. <br/>
 
 <b> OUTPUT </b>
 
-Summary statistics file with:
+Summary statistics file with: <br/>
 SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
 
 <b> config file </b>
@@ -47,11 +47,13 @@ The phenotypes script extracts summary data on available phenotypes.
 
 The genotypes script extracts summary data on the genotype data.
 
-<i> 1.0_convert_data </i> prepares the genetic data for analysis and extracts relevant information on variants (e.g. MAF).
+<b> 4.0_unified_regression </b> 
 
-<i> 2.0_unified_regression </i> runs the regressions in R.
+This script runs the regressions in R.
 
-<i> 3.0_merge_results </i> merges the files across chromosomes into a final summary statistics file.
+<b> 5.0_tidy </b> 
+
+This script compiles the output into a final summary statistics file.
 
 
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
