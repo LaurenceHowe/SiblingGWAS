@@ -13,7 +13,7 @@ outfile <- arguments[3]
 #---------------------------------------------------------------------------------------------#
 # Track time:
 time_start <- Sys.time()
-paste0("Running GWAS for: ", filestart, " | Started: ")
+paste0("Running GWAS for: ", outfile, " | Started: ")
 time_start
 
 paste0("Loading genetic data")
