@@ -2,12 +2,22 @@
 
 Scripts for running GWAS using siblings to estimate Within-Family (WF) and Between-Family (BF) effects of genetic variants on continuous traits. Allows the inclusion of more than two siblings from one family.
 
-INPUT FILES required:
-1) List of siblings and residualized phenotype in a tab-separated text file with 3 columns (FID, IID, Phenotype)
-2) Imputed genotype data for siblings, split across chromosomes, in PLINK binary format (.bed .bim .fam)
+<b> INPUT FILES required: </b>
+1) Phenotype file containing individual IDs and phenotypes: format (IID, Phenotype).
+2) Covariate file containing individual IDs, age and sex: format (IID, Age, Sex).
+3) Imputed genotype data in PLINK binary format (.bed .bim .fam): build 37, merged into one file across chromosomes, chromosomes numbered 1-23 in .bim file.
+4) INFO file.
 
-MASTER_SCRIPT_nopaths calls the relevant subscripts for running the analysis.
-This script must be edited for file path names.
+<b> config file </b>
+
+File to be edited with paths to relevant input files.
+Note that only this file should be edited.
+
+<b> 1.0_setup </b>
+
+The set-up script runs checks to ensure that the input files are in the correct format and checks the installation of R packages.
+
+<b> 2.0_siblings </b>
 
 <i> 1.0_convert_data </i> prepares the genetic data for analysis and extracts relevant information on variants (e.g. MAF).
 
@@ -15,7 +25,7 @@ This script must be edited for file path names.
 
 <i> 3.0_merge_results </i> merges the files across chromosomes into a final summary statistics file.
 
-OUTPUT:
+<b> OUTPUT </b>
 
 Summary statistics file with:
 SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
@@ -24,4 +34,4 @@ SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-valu
 
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
-Note scripts were adapted from original scripts by Sean Lee.
+Note scripts were adapted from scripts by Gibran Hemani & Sean Lee.
