@@ -3,9 +3,12 @@
 Scripts for running GWAS using siblings to estimate Within-Family (WF) and Between-Family (BF) effects of genetic variants on continuous traits. Allows the inclusion of more than two siblings from one family.
 
 <b> INPUT FILES required: </b>
-1) Phenotype file containing individual IDs and phenotypes: format (IID, Phenotype).
-2) Covariate file containing individual IDs, age and sex: format (IID, Age, Sex).
-3) Imputed genotype data in PLINK binary format (.bed .bim .fam): build 37, merged into one file across chromosomes, chromosomes numbered 1-23 in .bim file.
+1) Imputed genotype data in PLINK binary format (.bed .bim .fam). The first two columns of the .fam file must contain the Family ID (FID), which should be the same for siblings and distinct for non-siblings, and a unique Indiviudal ID (IID) for each participant. 
+
+Genotype data should be on build 37, merged into one file across chromosomes and with chromosomes numbered 1-23 in .bim file.
+
+2) Phenotype file: format (IID, Phenotype).
+3) Covariate file: format (IID, Age, Sex).
 4) INFO file.
 
 <b> config file </b>
