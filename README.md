@@ -14,10 +14,11 @@ Family2 Sibling1 <br/>
 Family2 Sibling2 <br/>
 <br/>
 b) Siblings are defined as follows: <br/>
-c) Genotype data should be on build 37. <br/>
-d) Genotype data should be merged into one file across chromosomes. <br/>
-e) Chromosomes should be numbered 1-23 in .bim file. <br/>
-f) Filtered variants such that INFO > 0.3 & MAF > 0.01. <br/>
+c) SNPS should be rsid format rather than CHR:BP. <br/>
+d) Genotype data should be on build 37. <br/>
+e) Genotype data should be merged into one file across chromosomes. <br/>
+f) Chromosomes should be numbered 1-23 in .bim file. <br/>
+g) Filtered variants such that INFO > 0.3 & MAF > 0.01. <br/>
 
 2) Covariate file in tab delimited format. <br/>
 a) First column should be IID. <br/>
