@@ -1,15 +1,19 @@
 #!/bin/bash
 
 echo "Partitioning genotype file"
-#Partition genotype file into chunks of 10,000 SNPs
-split -l5 -d /mnt/storage/home/lh14833/Test/input_data/example.bim extract
+
+#Partition size
+size=5
+#Partition genotype file into chunks of x SNPs
+split -l$size -d /mnt/storage/home/lh14833/Test/input_data/example.bim extract
 
 #Number of SNPs in .bim file
 snpnumber=$(wc -l < /mnt/storage/home/lh14833/Test/input_data/example.bim)
 
 #Rounding for truncation and count number of files
-round=$(echo "$((snpnumber+4))")
-partitions=$(echo "$((round/5))")
+
+round=$(echo "$((snpnumber+$size-1))")
+partitions=$(echo "$((round/$size))")
 
 echo "Running analysis"
 #Run analysis on partitioned files
