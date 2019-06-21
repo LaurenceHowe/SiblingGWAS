@@ -4,13 +4,9 @@ require(lmtest)
 
 # import argument
 arguments <- commandArgs(trailingOnly = T)
-phenfile <- arguments[1]
-
-# load input filename
-filestart <- sub(".raw","", phenfile)
-
-# produce output filename
-outfile <- sub("data", "output", filestart)
+rawfile <- arguments[1]
+bimfile <- arguments[2]
+outfile <- arguments[3]
 
 #---------------------------------------------------------------------------------------------#
 # Begin GWAS code:
@@ -23,16 +19,10 @@ time_start
 paste0("Loading genetic data")
 ped <- fread(rawfile, sep=" ")
 
-# Read in the SNP information
-paste0("Loading SNP info")
-bim <- fread(paste0(filestart,".bim"), sep="\t")
-
-# Read in the allele frequencies
-paste0("Loading Allele freq")
-freq <- fread(paste0(filestart,".frq"), sep="\t")
+bim<-fread(bimfile)
 
 # Create a new data.frame which will be filled with all necessary output information
-output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, CALLRATE=NA, MAF=freq$V1, N_CALLED=NA, N_REG=NA, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA)
+output <- data.frame(CHR=bim$V1, SNP=bim$V2, N_REG=NA, BP=bim$V4, A1=bim$V5, A2=bim$V6, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA)
 
 #---------------------------------------------------------------------------------------------#
 # loop over all SNPs in a chromosome (should take about 10 hrs)
@@ -40,15 +30,16 @@ output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, CA
 paste0("Looping...")
 ptm <- proc.time()
 
-# loop over all SNPs in a chromosome 
-for (i in 1:(ncol(ped)-6)) {
+# loop over all SNPs
+snps <- grep("rs[0-9]", colnames(ped), value = T)
+
+for (i in 1:length(snps)) {
     # Calculate the Callrate: for how many sibs the SNP is available
     snp_ind <- i+6 
-    output$CALLRATE[i] <- sum(!is.na(ped[, snp_ind, with=FALSE]))/nrow(ped)
-    output$N_CALLED[i] <- nrow(ped) - sum(is.na(ped[, snp_ind, with=FALSE]))
+
 
     # Make a matrix with: [FID PHENOTYPE] [individ - family mean ] [family mean]
-    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$PHENOTYPE, GENOTYPE=as.numeric(unlist(ped[,snp_ind,with=FALSE])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind,with=FALSE])), ped$FID, FUN=mean))
+    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$PHENOTYPE, GENOTYPE=as.numeric(unlist(ped[,snp_ind])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind])), ped$FID, FUN=mean))
     ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
