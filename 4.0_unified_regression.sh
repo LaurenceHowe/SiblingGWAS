@@ -31,7 +31,7 @@ output.${i}
 
 #Remove .raw file
 rm temp.${i}*
-rm extract${k};
+rm extract${k}
 done
 
 echo "Completed analysis"
