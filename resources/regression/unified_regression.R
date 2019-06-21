@@ -39,7 +39,7 @@ for (i in 1:length(snps)) {
 
 
     # Make a matrix with: [FID PHENOTYPE] [individ - family mean ] [family mean]
-    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$PHENOTYPE, GENOTYPE=as.numeric(unlist(ped[,snp_ind])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind])), ped$FID, FUN=mean))
+    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$PHENOTYPE, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean))
     ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
