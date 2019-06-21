@@ -17,10 +17,11 @@ bim <- as.data.frame(fread(bim_file, h=F))
 message("Number of SNPs: ", nrow(bim))
 
 # test chr coding
-chrno <- table(bim[,1])
+chrno <- data.frame(table(bim[,1]))
+names(chrno)<-c("CHR", "Freq")
 w <- which(! names(chrno) %in% as.character(c(1:23)))
 
-print(data.frame(chrno))
+print(chrno)
 
 if(length(w) > 0)
 {
