@@ -12,7 +12,7 @@ controlsnps_file <- as.character(args[4])
 
 message("Checking bim file: ", bim_file)
 controlsnps <- read.table(controlsnps_file, header=F, stringsAsFactors=F)
-bim <- fread(bim_file, h=F)
+bim <- as.data.frame(fread(bim_file, h=F))
 
 message("Number of SNPs: ", nrow(bim))
 
