@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir ${section_03_directory}
+mkdir ${section_03_logfile}
+
 set -e
 source ./config
 exec &> >(tee ${section_03_logfile})
@@ -19,3 +22,6 @@ snpnumber=$(wc -l < ${bfile_raw}.bim)
 
 round=$(echo "$((snpnumber+$size-1))")
 partitions=$(echo "$((round/$size))")
+
+echo $snpnumber
+echo $partitions
