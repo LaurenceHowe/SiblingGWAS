@@ -26,6 +26,7 @@ echo "Running analysis"
 #Convert to .raw
 plink \
 --bfile ${bfile_raw} \
+--allow-no-sex \
 --extract ${section_03_dir}/extract${k} \
 --recodeA \
 --out ${section_04_dir}/temp.${i}
