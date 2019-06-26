@@ -1,10 +1,7 @@
 #!/bin/bash
 
 set -e
-
 source ./config
-
-exec &> >(tee ${section_01_logfile})
 
 echo "Partitioning genotype file"
 
