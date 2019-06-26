@@ -20,4 +20,4 @@ ibd_snps="{home_directory}/resources/genetics/example-ibd-snps.txt"
 phenotype_list="${section_01_dir}/phenotype_list.txt"
 
 #plink path
-plink="${home_directory}/resources/bin/plink1.90"
+plink="${home_directory}/resources/plink1.90"
