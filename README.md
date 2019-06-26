@@ -48,19 +48,15 @@ Note that only this file should be edited. <br/>
 
 The set-up script runs checks to ensure that the input files are in the correct format and checks the installation of R packages.
 
-<b> 2.0_phenotypes </b>
+<b> 2.0_summary </b>
 
-The phenotypes script extracts summary data on available phenotypes.
+This script extracts summary data on available phenotypes.
 
-<b> 3.0_genotypes </b>
-
-The genotypes script extracts summary data on the genotype data.
-
-<b> 4.0_unified_regression </b> 
+<b> 3.0_unified_regression </b> 
 
 This script runs the regressions in R.
 
-<b> 5.0_tidy </b> 
+<b> 4.0_tidy </b> 
 
 This script compiles the output into a final summary statistics file.
 
