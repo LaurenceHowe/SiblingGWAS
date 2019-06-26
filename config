@@ -24,6 +24,13 @@ phenotypes="/mnt/storage/home/lh14833/Test/input_data/example-phen.txt"
 # This should be a file with three columns, SNP, MAF and quality scores
 quality_scores="/mnt/storage/home/lh14833/Test/input_data/example-info.txt"
 
+# Parallelisation parameters
+# Number of threads to use per node
+nthreads="16"
+
+# Number of chunks to split genetic data into for GWAS
+genetic_chunks="1000"
+
 # DO NOT MODIFY
 
 source ${home_directory}/resources/parameters
