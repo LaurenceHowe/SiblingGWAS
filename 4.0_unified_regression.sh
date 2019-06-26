@@ -3,6 +3,11 @@
 set -e
 source ./config
 
+mkdir -p ${section_04_dir}
+mkdir -p ${section_04_dir}/logs
+
+exec &> >(tee ${section_04_logfile})
+
 batch_number=${1}
 re='^[0-9]+$'
 
@@ -20,20 +25,20 @@ echo "Running analysis"
 
 #Convert to .raw
 plink \
---bfile ${bfile.raw} \
+--bfile ${bfile_raw} \
 --extract ${section_03_dir}/extract${k} \
 --recodeA \
---out temp.${i}
+--out ${section_04_dir}/temp.${i}
 
 #Run regression script in R
 Rscript resources/regression/unified_regression.R \
-temp.${i}.raw \
-extract${k} \
+${section_04_dir}/temp.${i}.raw \
+${section_03_dir}/extract${k} \
 ${section_04_dir}/output.${i}
 
 #Remove .raw file
-rm temp.${i}*
-rm extract${k}
+rm ${section_04_dir}/temp.${i}*
+rm ${section_03_dir}/extract${k}
 )
 done
 
