@@ -16,7 +16,7 @@ analyst_email="lh14833@bristol.ac.uk"
 
 home_directory="/mnt/storage/home/lh14833/Test/SiblingGWAS"
 
-bfile_raw="/mnt/storage/home/lh14833/Test/input_data/example"
+bfile_raw="/mnt/storage/home/lh14833/Siblings/Siblings_22"
 covariates="/mnt/storage/home/lh14833/Test/input_data/example-cov.txt"
 phenotypes="/mnt/storage/home/lh14833/Test/input_data/example-phen.txt"
 
@@ -29,7 +29,7 @@ quality_scores="/mnt/storage/home/lh14833/Test/input_data/example-info.txt"
 nthreads="16"
 
 # Splitting data-set into chunks of e.g. 10,000 SNPs to run in batch
-chunks_snp_number="1000"
+chunks_snp_number="10000"
 
 # DO NOT MODIFY
 

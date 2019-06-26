@@ -2,6 +2,7 @@
 
 set -e
 source ./config
+exec &> >(tee ${section_03_logfile})
 
 echo "Partitioning genotype file"
 
@@ -9,10 +10,10 @@ echo "Partitioning genotype file"
 size=${chunks_snp_number}
 
 #Partition genotype file into chunks of partition size SNPs
-split -l$size -d ${bfile.raw}.bim ${section_03_dir}/extract
+split -l$size -d ${bfile_raw}.bim ${section_03_dir}/extract
 
 #Number of SNPs in .bim file
-snpnumber=$(wc -l < ${bfile.raw}.bim)
+snpnumber=$(wc -l < ${bfile_raw}.bim)
 
 #Rounding for truncation and count number of files
 
