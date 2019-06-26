@@ -20,8 +20,8 @@ echo "Running analysis"
 
 #Convert to .raw
 plink \
---bfile /mnt/storage/home/lh14833/Test/input_data/example \
---extract extract${k} \
+--bfile ${bfile.raw} \
+--extract ${section_03_dir}/extract${k} \
 --recodeA \
 --out temp.${i}
 
@@ -29,7 +29,7 @@ plink \
 Rscript resources/regression/unified_regression.R \
 temp.${i}.raw \
 extract${k} \
-output.${i}
+${section_04_dir}/output.${i}
 
 #Remove .raw file
 rm temp.${i}*
