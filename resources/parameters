@@ -18,3 +18,6 @@ ibd_snps="{home_directory}/resources/genetics/example-ibd-snps.txt"
 
 # phenotypes present in the dataset
 phenotype_list="${section_01_dir}/phenotype_list.txt"
+
+#plink path
+plink="${home_directory}/resources/bin/plink1.90"
