@@ -28,8 +28,8 @@ quality_scores="/mnt/storage/home/lh14833/Test/input_data/example-info.txt"
 # Number of threads to use per node
 nthreads="16"
 
-# Number of chunks to split genetic data into for GWAS
-genetic_chunks="1000"
+# Splitting data-set into chunks of e.g. 10,000 SNPs to run in batch
+chunks_snp_number="1000"
 
 # DO NOT MODIFY
 
