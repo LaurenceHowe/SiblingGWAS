@@ -73,12 +73,18 @@ then
 fi
 
 #Check siblings file
-#To be added in
+#To be tweaked
 
 if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
 then
 	section_message "siblings"
-	
+	plink \
+	--bfile ${bfile_raw} \
+	--extract snplist.txt \
+	--genome \
+	--rel-check \
+	--out rel
+		
 fi
 
 #Check covariate file
