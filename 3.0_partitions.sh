@@ -1,10 +1,11 @@
 #!/bin/bash
 
-mkdir ${section_03_directory}
-mkdir ${section_03_logfile}
-
 set -e
 source ./config
+
+mkdir -p ${section_03_dir}
+mkdir -p ${section_03_dir}/logs
+
 exec &> >(tee ${section_03_logfile})
 
 echo "Partitioning genotype file"
