@@ -29,13 +29,15 @@ plink \
 --allow-no-sex \
 --extract ${section_03_dir}/extract${k} \
 --recodeA \
---out ${section_04_dir}/temp.${i}
+--out ${section_04_dir}/temp.${batch_number}
 
 #Run regression script in R
 Rscript resources/regression/unified_regression.R \
-${section_04_dir}/temp.${i}.raw \
+${section_04_dir}/temp.${batch_number}.raw \
 ${section_03_dir}/extract${k} \
-${section_04_dir}/output.${i}
+${phenotypes} \
+${covariates} \
+${section_04_dir}/output.${batch_number}
 
 #Remove .raw file
 rm ${section_04_dir}/temp.${i}*
