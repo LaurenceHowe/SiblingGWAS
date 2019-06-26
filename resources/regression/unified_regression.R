@@ -19,10 +19,13 @@ paste0("Running GWAS for: ", outfile, " | Started: ")
 time_start
 
 paste0("Loading genetic data")
-ped <- fread(rawfile, sep=" ")
-bim<-fread(bimfile)
-phen<-fread(phenfile)
-cov<-fread(covfile)
+raw <- fread(rawfile, sep=" ")
+bim <- fread(bimfile)
+phen <- fread(phenfile)
+cov <- fread(covfile)
+
+temp<-merge(raw,phen,by=c("FID", "IID"))
+ped<-merge(temp,cov, by=c("FID", "IID"))
 
 # Create a new data.frame which will be filled with all necessary output information
 output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_REG=NA, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA)
