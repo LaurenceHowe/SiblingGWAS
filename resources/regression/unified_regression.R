@@ -28,7 +28,7 @@ phencov<-merge(phen,cov,by="IID")
 ped<-merge(raw,phencov, by="IID")
 
 # Create a new data.frame which will be filled with all necessary output information
-output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_REG=NA, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA)
+output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_REG=NA, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA, BETA_TOTAL=NA, SE_TOTAL=NA, P_TOTAL=NA)
 
 #---------------------------------------------------------------------------------------------#
 # loop over all SNPs in a chromosome (should take about 10 hrs)
@@ -50,15 +50,20 @@ for (i in 1:length(snps)) {
 
     # Run unified regression
     fit <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE, data=ped3)
-
+    
+    # Extract total effect
+    total <-lm(formula=PHENOTYPE + GENOTYPE, data=ped2)
+    
     # Sample size in regression
     output$N_REG[i] <- length(resid(fit))
-
+    
     # Save Beta information
     output$BETA_0[i] <- fit$coefficients[1]
     output$BETA_BF[i] <- fit$coefficients[2]
     output$BETA_WF[i] <- fit$coefficients[3]
-
+    output$BETA_TOTAL[i]<-total$coefficients[2]
+    output$SE_TOTAL[i]<-summary(total)$coefficients[2,2]
+    output$P_TOTAL[i]<-summary(total)$coefficients[2,4]
     # save the variance covariance matrix
     vcv_matrix = vcovCL(fit, cluster=ped3$FID)
     if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
