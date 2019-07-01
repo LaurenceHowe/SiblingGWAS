@@ -9,7 +9,7 @@ mkdir -p ${section_04_dir}/logs
 exec &> >(tee ${section_04_logfile})
 
 batch_number=${1}
-phenotype=${2}
+gwasoutcome=${2}
 re='^[0-9]+$'
 
 if ! [[ $batch_number =~ $re ]] ; then
@@ -18,7 +18,7 @@ if ! [[ $batch_number =~ $re ]] ; then
 	exit 1
 fi
 
-if  ! [[ $phenotype = "Height" ]] | [[ $phenotype = "BMI" ]] ; then
+if  ! [[ $gwasoutcome = "Height" ]] | [[ $gwasoutcome = "BMI" ]] ; then
 	echo "error: Phenotype not recognised."
 	exit 1
 fi
@@ -43,7 +43,8 @@ ${section_04_dir}/temp.${batch_number}.raw \
 ${section_03_dir}/extract${k} \
 ${phenotypes} \
 ${covariates} \
-${section_04_dir}/output.${batch_number}
+${section_04_dir}/output.${batch_number} \
+${gwas_outcome}
 
 #Remove .raw file
 rm ${section_04_dir}/temp.${i}*
