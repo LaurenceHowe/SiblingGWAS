@@ -9,11 +9,17 @@ mkdir -p ${section_04_dir}/logs
 exec &> >(tee ${section_04_logfile})
 
 batch_number=${1}
+phenotype=${2}
 re='^[0-9]+$'
 
 if ! [[ $batch_number =~ $re ]] ; then
 	echo "error: Batch variable is not a number"
 	echo "Usage: ${0} [batch number]"
+	exit 1
+fi
+
+if ! [[ $phenotype =Height | $phenotype =BMI ]] ; then
+	echo "error: Phenotype not recognised."
 	exit 1
 fi
 
