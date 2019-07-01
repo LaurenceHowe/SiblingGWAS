@@ -21,7 +21,12 @@ time_start
 paste0("Loading genetic data")
 raw <- fread(rawfile, sep=" ")
 bim <- fread(bimfile)
+
 phen <- fread(phenfile)
+temp<-paste(outcome)
+phen2<-subset(phen, select=c("IID", temp))
+names(phen2)<-c("IID", "Outcome")
+
 cov <- fread(covfile)
 
 phencov<-merge(phen,cov,by="IID")
@@ -45,7 +50,7 @@ for (i in 1:length(snps)) {
 
 
     # Make a matrix with: [FID PHENOTYPE] [individ - family mean ] [family mean]
-    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$PHENOTYPE, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean))
+    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$Outcome, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean))
     ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
