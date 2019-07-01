@@ -110,7 +110,7 @@ for (i in 1:length(snps)) {
 proc.time()-ptm
 
 # Write output:
-fwrite(output, file = paste0(outfile,"_WFunified_results.txt"), sep="\t")
+fwrite(output, file = paste0(outfile,"_results.txt"), sep="\t")
 
 # Close out
 cat("Finished at: ")
