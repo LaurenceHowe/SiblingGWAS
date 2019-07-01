@@ -52,11 +52,15 @@ The set-up script runs checks to ensure that the input files are in the correct 
 
 This script extracts summary data on available phenotypes.
 
-<b> 3.0_unified_regression </b> 
+<b> 3.0_partitions </b>
+
+This script partitions the genetic data into smaller lists of SNPs to be run in batches.
+
+<b> 4.0_unified_regression </b> 
 
 This script runs the regressions in R.
 
-<b> 4.0_tidy </b> 
+<b> 5.0_tidy </b> 
 
 This script compiles the output into a final summary statistics file.
 
