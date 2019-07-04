@@ -32,37 +32,11 @@ awk '{
     }' data_chr${i}_filtered.bim.orig2 > data_chr${i}_filtered.bim
 grep "duplicate" data_chr${i}_filtered.bim | awk '{ print $2 }' > duplicates.chr${i}.txt
 
-plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered
+plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered_2
 
-
-# Relabel the SNP IDs and extract relevant columns in the snp-stats file
-# Assumes column 4 is the position
-# Assumes columns 5 and 6 are the allele names
-# Assumes column 15 is the MAF
-# Assumes columns 19 is the info score
-
-awk -v chr=$i '{
-       if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
-            print "chr"chr":"$4":SNP", $15, $19;
-
-print $1, "chr"$1":"$4":SNP", $3, $4, $5, $6;
-else
-   print $1, "chr"$1":"$4":INDEL", $3, $4, $5, $6;
-     }' data_chr${i}_filtered.bim.orig > data_chr${i}_filtered.bim
-
-# For simplicity remove any duplicates
-
-cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig2
-awk '{
-     if (++dup[$2] > 1) {
-            print $1, $2".duplicate."dup[$2], $3, $4, $5, $6
-     } else {
-       print $0 }
-    }' data_chr${i}_filtered.bim.orig2 > data_chr${i}_filtered.bim
-grep "duplicate" data_chr${i}_filtered.bim | awk '{ print $2 }' > duplicates.chr${i}.txt
-
-plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered
-
+mv data_chr${i}_filtered_2.bed data_chr${i}_filtered.bed
+mv data_chr${i}_filtered_2.bim data_chr${i}_filtered.bim
+mv data_chr${i}_filtered_2.fam data_chr${i}_filtered.fam
 
 # Relabel the SNP IDs and extract relevant columns in the snp-stats file
 # Assumes column 4 is the position
@@ -72,10 +46,11 @@ plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed 
 
 awk -v chr=$i '{
        if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
-            print "chr"chr":"$4":SNP", $14, $1;
-        else
+            print "chr"chr":"$4":SNP", $14, $17;
+            else
             print "chr"chr":"$4":INDEL", $14, $17;
-    }' data_chr${i}.snp-stats > data_chr${i}.info
+            }' data_chr${i}.snp-stats > data_chr${i}.info
+
 
 # Remove duplicates from snp-stats
 cp data_chr${i}.info data_chr${i}.info.orig
@@ -93,7 +68,7 @@ do
     echo "data_chr${i}_filtered"
 done > mergefile.txt
 
-plink1.90 --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out data_filtered
+plink --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out data_filtered
 
 # Combine info files into a single file
 
