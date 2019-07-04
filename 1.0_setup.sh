@@ -3,6 +3,7 @@
 set -e
 source ./config
 
+mkdir -p ${results}
 mkdir -p ${section_01_dir}
 mkdir -p ${section_01_dir}/logs
 
