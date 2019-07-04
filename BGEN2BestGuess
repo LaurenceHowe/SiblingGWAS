@@ -1,0 +1,105 @@
+
+#!/bin/bash
+for i in {1..22}
+do
+
+#Extract siblings
+qctool -g data.chr${i}.bgen -s data.chr1-22.sample -incl-samples Siblings.txt -og filteredchr${i}.bgen
+
+#Calculate summary data (INFO scores etc)
+qctool -g filteredchr${i}.bgen -s filtered.sample -snp-stats data_chr${i}.snp-stats
+
+#Extract best-guess data
+plink --bgen filteredchr${i}.bgen snpid-chr --sample filtered.sample --set-missing-var-ids @:#\$1,\$2 --make-bed --out data_chr${i}_filtered --hard-call-threshold 0.499999
+
+# Rename the SNP IDs if necessary to avoid possible duplicates
+cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig
+
+awk '{
+if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
+   print $1, "chr"$1":"$4":SNP", $3, $4, $5, $6;
+else
+   print $1, "chr"$1":"$4":INDEL", $3, $4, $5, $6;
+     }' data_chr${i}_filtered.bim.orig > data_chr${i}_filtered.bim
+
+# For simplicity remove any duplicates
+cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig2
+awk '{
+     if (++dup[$2] > 1) {
+            print $1, $2".duplicate."dup[$2], $3, $4, $5, $6
+     } else {
+       print $0 }
+    }' data_chr${i}_filtered.bim.orig2 > data_chr${i}_filtered.bim
+grep "duplicate" data_chr${i}_filtered.bim | awk '{ print $2 }' > duplicates.chr${i}.txt
+
+plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered
+
+
+# Relabel the SNP IDs and extract relevant columns in the snp-stats file
+# Assumes column 4 is the position
+# Assumes columns 5 and 6 are the allele names
+# Assumes column 15 is the MAF
+# Assumes columns 19 is the info score
+
+awk -v chr=$i '{
+       if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
+            print "chr"chr":"$4":SNP", $15, $19;
+
+print $1, "chr"$1":"$4":SNP", $3, $4, $5, $6;
+else
+   print $1, "chr"$1":"$4":INDEL", $3, $4, $5, $6;
+     }' data_chr${i}_filtered.bim.orig > data_chr${i}_filtered.bim
+
+# For simplicity remove any duplicates
+
+cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig2
+awk '{
+     if (++dup[$2] > 1) {
+            print $1, $2".duplicate."dup[$2], $3, $4, $5, $6
+     } else {
+       print $0 }
+    }' data_chr${i}_filtered.bim.orig2 > data_chr${i}_filtered.bim
+grep "duplicate" data_chr${i}_filtered.bim | awk '{ print $2 }' > duplicates.chr${i}.txt
+
+plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered
+
+
+# Relabel the SNP IDs and extract relevant columns in the snp-stats file
+# Assumes column 4 is the position
+# Assumes columns 5 and 6 are the allele names
+# Assumes column 15 is the MAF
+# Assumes columns 19 is the info score
+
+awk -v chr=$i '{
+       if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
+            print "chr"chr":"$4":SNP", $15, $19;
+        else
+            print "chr"chr":"$4":INDEL", $15, $19;
+    }' data_chr${i}.snp-stats > data_chr${i}.info
+
+# Remove duplicates from snp-stats
+cp data_chr${i}.info data_chr${i}.info.orig
+awk '{
+        if (++dup[$1] > 1) {
+            print $1".duplicate."dup[$1], $2, $3
+        } else {
+            print $0 }
+}' data_chr${i}.info.orig > data_chr${i}.info
+fgrep -v -w -f duplicates.chr${i}.txt <data_chr${i}.info >chr${i}_filtered.info
+done
+
+for i in {2..23}
+do 
+    echo "data_chr${i}_filtered"
+done > mergefile.txt
+
+plink1.90 --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out data_filtered
+
+# Combine info files into a single file
+
+head -n1 chr01_filtered.info > data_filtered.info
+
+for i in {1..23}
+do
+    awk ' NR>1 {print $0}' < chr${i}_filtered.info |cat >> data_filtered.info
+done
