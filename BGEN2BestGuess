@@ -10,7 +10,7 @@ qctool -g data.chr${i}.bgen -s data.chr1-22.sample -incl-samples Siblings.txt -o
 qctool -g filteredchr${i}.bgen -s filtered.sample -snp-stats -osnp data_chr${i}.snp-stats
 
 #Extract best-guess data
-plink --bgen filteredchr${i}.bgen snpid-chr --sample filtered.sample --set-missing-var-ids @:#\$1,\$2 --make-bed --out data_chr${i}_filtered --hard-call-threshold 0.499999
+plink --bgen filteredchr${i}.bgen --sample filtered.sample --set-missing-var-ids @:#\$1,\$2 --make-bed --out data_chr${i}_filtered --hard-call-threshold 0.499999
 
 # Rename the SNP IDs if necessary to avoid possible duplicates
 cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig
