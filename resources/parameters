@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # logfiles
-
-section_01_dir="${home_directory}/results/01"
-section_02_dir="${home_directory}/results/02"
-section_03_dir="${home_directory}/results/03"
-section_04_dir="${home_directory}/results/04"
-section_05_dir="${home_directory}/results/05"
+results="${home_directory}/results"
+section_01_dir="${results}/01"
+section_02_dir="${results}/02"
+section_03_dir="${results}/03"
+section_04_dir="${results}/04"
+section_05_dir="${results}/05"
 
 section_01_logfile="${section_01_dir}/logs/log.txt"
 section_02_logfile="${section_02_dir}/logs/log.txt"
