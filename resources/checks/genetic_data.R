@@ -19,7 +19,7 @@ message("Number of SNPs: ", nrow(bim))
 # test chr coding
 chrno <- data.frame(table(bim[,1]))
 names(chrno)<-c("CHR", "Freq")
-w <- which(! names(chrno) %in% as.character(c(1:23)))
+w <- which(!chrno$CHR %in% as.character(c(1:23)))
 
 print(chrno)
 
