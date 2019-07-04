@@ -57,7 +57,7 @@ for (i in 1:length(snps)) {
     fit <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE, data=ped3)
     
     # Extract total effect
-    total <-lm(formula=PHENOTYPE + GENOTYPE, data=ped2)
+    fit2 <-lm(formula=PHENOTYPE + GENOTYPE, data=ped2)
     
     # Sample size in regression
     output$N_REG[i] <- length(resid(fit))
@@ -66,9 +66,9 @@ for (i in 1:length(snps)) {
     output$BETA_0[i] <- fit$coefficients[1]
     output$BETA_BF[i] <- fit$coefficients[2]
     output$BETA_WF[i] <- fit$coefficients[3]
-    output$BETA_TOTAL[i]<-total$coefficients[2]
-    output$SE_TOTAL[i]<-summary(total)$coefficients[2,2]
-    output$P_TOTAL[i]<-summary(total)$coefficients[2,4]
+    output$BETA_TOTAL[i]<-fit2$coefficients[2]
+ 
+    
     # save the variance covariance matrix
     vcv_matrix = vcovCL(fit, cluster=ped3$FID)
     if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
@@ -87,7 +87,7 @@ for (i in 1:length(snps)) {
         output$VCV_WF[i] <- vcv_matrix[3,3]
     }
 
-    # save the clustered SE's and corresponding p-values
+    # save the clustered SEs and corresponding P-values for WF/BF
     test_matrix <- coeftest(fit, vcov.=vcv_matrix)
     if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$SE_BETA_0[i] <- NA
@@ -104,7 +104,16 @@ for (i in 1:length(snps)) {
         output$P_BETA_BF[i] <- test_matrix[2,4] 
         output$P_BETA_WF[i] <- test_matrix[3,4] 
     }
-
+    #save the clustered SEs for the total effect and P-values
+test_matrix2 <- coeftest(fit2, vcov.=vcv_matrix)
+    if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
+        output$SE_TOTAL[i] <- NA
+        output$P_TOTAL[i] <- NA
+    } else {
+        output$SE_TOTAL[i] <- test_matrix[2,2] 
+        output$P_TOTAL[i] <- test_matrix[2,4] 
+ 
+    }
     if(i %% 1000 == 0) {
         print(paste0("Finished SNP ", i, " out of ",ncol(ped)-6)) 
         print(Sys.time()) 
