@@ -84,7 +84,7 @@ then
 	section_message "siblings"
 	plink \
 	--bfile ${bfile_raw} \
-	--extract snplist.txt \
+	--extract ${snplist} \
 	--genome \
 	--rel-check \
 	--out rel
