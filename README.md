@@ -14,7 +14,7 @@ Family2 Sibling1 <br/>
 Family2 Sibling2 <br/>
 <br/>
 b) Siblings are defined as follows: <br/>
-c) SNPS should be rsid format rather than CHR:BP. <br/>
+c) SNPS should be in CHR:BP format. <br/>
 d) Genotype data should be on build 37. <br/>
 e) Genotype data should be merged into one file across chromosomes. <br/>
 f) Chromosomes should be numbered 1-23 in .bim file. <br/>
