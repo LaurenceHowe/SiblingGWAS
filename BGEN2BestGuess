@@ -67,14 +67,14 @@ plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed 
 # Relabel the SNP IDs and extract relevant columns in the snp-stats file
 # Assumes column 4 is the position
 # Assumes columns 5 and 6 are the allele names
-# Assumes column 15 is the MAF
-# Assumes columns 19 is the info score
+# Assumes column 14 is the MAF
+# Assumes columns 17 is the info score
 
 awk -v chr=$i '{
        if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
-            print "chr"chr":"$4":SNP", $15, $19;
+            print "chr"chr":"$4":SNP", $14, $1;
         else
-            print "chr"chr":"$4":INDEL", $15, $19;
+            print "chr"chr":"$4":INDEL", $14, $17;
     }' data_chr${i}.snp-stats > data_chr${i}.info
 
 # Remove duplicates from snp-stats
