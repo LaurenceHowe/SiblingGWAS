@@ -42,9 +42,11 @@ paste0("Looping...")
 ptm <- proc.time()
 
 # loop over all SNPs
-snps <- grep("rs[0-9]", colnames(ped), value = T)
+SNPs<- grep("SNP", colnames(ped), value = T)
+INDELs <- grep("INDEL", colnames(ped), value=T)
+Variants<-c(SNPs, INDELs)
 
-for (i in 1:length(snps)) {
+for (i in 1:length(Variants)) {
     # Calculate the Callrate: for how many sibs the SNP is available
     snp_ind <- i+6 
 
