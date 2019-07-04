@@ -7,7 +7,7 @@ do
 qctool -g data.chr${i}.bgen -s data.chr1-22.sample -incl-samples Siblings.txt -og filteredchr${i}.bgen
 
 #Calculate summary data (INFO scores etc)
-qctool -g filteredchr${i}.bgen -s filtered.sample -snp-stats data_chr${i}.snp-stats
+qctool -g filteredchr${i}.bgen -s filtered.sample -snp-stats -osnp data_chr${i}.snp-stats
 
 #Extract best-guess data
 plink --bgen filteredchr${i}.bgen snpid-chr --sample filtered.sample --set-missing-var-ids @:#\$1,\$2 --make-bed --out data_chr${i}_filtered --hard-call-threshold 0.499999
