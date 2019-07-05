@@ -9,7 +9,7 @@ mkdir -p ${section_04_dir}/logs
 batch_number=${1}
 gwasoutcome=${2}
 
-exec &> >(tee ${section_04_logfile}-batch_number)
+exec &> >(tee ${section_04_logfile})
 
 re='^[0-9]+$'
 
