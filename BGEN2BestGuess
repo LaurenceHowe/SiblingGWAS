@@ -72,7 +72,7 @@ do
     echo "data_chr${i}_filtered"
 done > mergefile.txt
 
-plink --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out data_filtered
+plink --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out temp
 
 # Combine info files into a single file
 
@@ -82,3 +82,12 @@ for i in {1..23}
 do
     awk ' NR>1 {print $0}' < chr${i}_filtered.info |cat >> data_filtered.info
 done
+
+
+# Prune on INFO 0.8 and MAF 0.01
+
+awk '$2<0.01 || $3<0.3  {print $0}' data_filtered.info > remove.txt
+
+plink --bfile temp --exclude remove.txt --make-bed --out data_filtered
+
+rm temp*
