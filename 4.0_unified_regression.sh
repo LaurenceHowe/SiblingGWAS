@@ -6,10 +6,11 @@ source ./config
 mkdir -p ${section_04_dir}
 mkdir -p ${section_04_dir}/logs
 
-exec &> >(tee ${section_04_logfile})
-
 batch_number=${1}
 gwasoutcome=${2}
+
+exec &> >(tee ${section_04_logfile}-batch_number)
+
 re='^[0-9]+$'
 
 if ! [[ $batch_number =~ $re ]] ; then
