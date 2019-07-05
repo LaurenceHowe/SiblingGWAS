@@ -44,6 +44,10 @@ mv data_chr${i}_filtered_2.fam data_chr${i}_filtered.fam
 # Assumes column 14 is the MAF
 # Assumes columns 17 is the info score
 
+#Remove lines with #
+
+sed -i '/#/d' data_chr${i}.snp-stats
+
 awk -v chr=$i '{
        if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G"))
             print "chr"chr":"$4":SNP", $14, $17;
