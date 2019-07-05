@@ -54,14 +54,14 @@ for (i in 1:length(Variants)) {
 
 
     # Make a matrix with: [FID PHENOTYPE] [individ - family mean ] [family mean]
-    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$Outcome, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean))
+    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$Outcome, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean), AGE=ped$Age, SEX=ped$Sex)
     ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
-    fit <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE, data=ped3)
+    fit <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE + AGE + SEX, data=ped3)
     
     # Extract total effect
-    fit2 <-lm(formula = PHENOTYPE ~ GENOTYPE, data=ped2)
+    fit2 <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX, data=ped2)
     
     # Sample size in regression
     output$N_REG[i] <- length(resid(fit))
