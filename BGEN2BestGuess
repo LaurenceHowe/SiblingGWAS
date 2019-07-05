@@ -86,7 +86,7 @@ done
 
 # Prune on INFO 0.8 and MAF 0.01
 
-awk '$2<0.01 || $3<0.3  {print $0}' data_filtered.info > remove.txt
+awk '$2<0.01 || $3<0.3  {print $1}' data_filtered.info > remove.txt
 
 plink --bfile temp --exclude remove.txt --make-bed --out data_filtered
 
