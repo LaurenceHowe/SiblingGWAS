@@ -24,7 +24,7 @@ bim <- fread(bimfile)
 
 paste0("Loading phenotype data")
 phen <- fread(phenfile)
-temp<-paste(outcome)
+temp<-paste("outcome")
 phen2<-subset(phen, select=c("IID", temp))
 names(phen2)<-c("IID", "Outcome")
 
