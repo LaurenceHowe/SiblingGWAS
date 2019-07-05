@@ -28,8 +28,8 @@ quality_scores="/mnt/storage/private/mrcieu/users/lh14833/private/data_filtered.
 # Number of threads to use per node
 nthreads="16"
 
-# Splitting data-set into chunks of e.g. 10,000 SNPs to run in batch
-chunks_snp_number="10000"
+# Splitting data-set into chunks of e.g. 100,000 SNPs to run in batch
+chunks_snp_number="100000"
 
 # DO NOT MODIFY
 
