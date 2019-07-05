@@ -61,7 +61,7 @@ for (i in 1:length(Variants)) {
     fit <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE, data=ped3)
     
     # Extract total effect
-    fit2 <-lm(formula=PHENOTYPE + GENOTYPE, data=ped2)
+    fit2 <-lm(formula = PHENOTYPE ~ GENOTYPE, data=ped2)
     
     # Sample size in regression
     output$N_REG[i] <- length(resid(fit))
