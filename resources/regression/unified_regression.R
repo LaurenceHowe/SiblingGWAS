@@ -119,7 +119,7 @@ test_matrix2 <- coeftest(fit2, vcov.=vcv_matrix)
  
     }
     if(i %% 1000 == 0) {
-        print(paste0("Finished SNP ", i, " out of ",ncol(ped)-6)) 
+        print(paste0("Finished SNP ", i, " out of ",ncol(raw)-6)) 
         print(Sys.time()) 
     }
 }
