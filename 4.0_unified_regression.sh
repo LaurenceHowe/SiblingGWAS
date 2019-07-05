@@ -18,7 +18,7 @@ if ! [[ $batch_number =~ $re ]] ; then
 	exit 1
 fi
 
-if  ! [[ $gwasoutcome = "Height" ]] | [[ $gwasoutcome = "BMI" ]] ; then
+if  ! [[ $gwasoutcome = "Height" ]] && ! [[ $gwasoutcome = "BMI" ]] ; then
 	echo "error: Phenotype not recognised."
 	exit 1
 fi
