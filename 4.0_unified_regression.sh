@@ -44,7 +44,7 @@ ${section_03_dir}/extract${k} \
 ${phenotypes} \
 ${covariates} \
 ${section_04_dir}/output.${batch_number} \
-${gwas_outcome}
+${gwasoutcome}
 
 #Remove .raw file
 rm ${section_04_dir}/temp.${i}*
