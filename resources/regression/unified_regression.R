@@ -31,7 +31,7 @@ names(phen2)<-c("IID", "Outcome")
 paste0("Loading covariate data")
 cov <- fread(covfile)
 
-phencov<-merge(phen,cov,by="IID")
+phencov<-merge(phen2,cov,by="IID")
 ped<-merge(raw,phencov, by="IID")
 
 # Create a new data.frame which will be filled with all necessary output information
