@@ -14,7 +14,7 @@ echo "Partitioning genotype file"
 size=${chunks_snp_number}
 
 #Partition genotype file into chunks of partition size SNPs
-split -l$size -d ${bfile_raw}.bim ${section_03_dir}/extract
+split -l$size -d ${bfile_raw}.bim -a4 ${section_03_dir}/extract
 
 #Number of SNPs in .bim file
 snpnumber=$(wc -l < ${bfile_raw}.bim)
