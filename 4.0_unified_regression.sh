@@ -24,7 +24,7 @@ if  ! [[ $gwasoutcome = "Height" ]] | [[ $gwasoutcome = "BMI" ]] ; then
 fi
 
 j=$(echo "$((batch_number-1))")
-k=`printf "%02d" $j`
+k=`printf "%04d" $j`
 
 echo "Running analysis"
 #Run analysis on partitioned files
