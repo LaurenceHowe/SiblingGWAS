@@ -30,7 +30,7 @@ if(length(w) > 0)
 	message("Warning: ", msg)
 }
 
-w <- which(names(chrno) %in% c(1:23))
+w <- which(chrno$CHR %in% c(1:23))
 if(length(w)<22)
 {
 	msg <- "Please change chromosome coding to 1-23, please dont use chr1, chr2, X etc."
@@ -59,30 +59,30 @@ bim2$alleles[w]<-"CT"
 w<-which(bim2$alleles=="TG")
 bim2$alleles[w]<-"GT"
 
-#message("Checking strand against control SNPs")
-#for (i in 1:22)
-#{
-#	chr <- bim2[which(bim2[,1] %in% i),]
-#	controlsnps.chr <- na.omit(controlsnps[which(controlsnps$V2 %in% i), ])
-#	controlsnps.chr$V6<-as.character(controlsnps.chr$V6)
-#	w<-which(controlsnps.chr$V5=="-"&controlsnps.chr$V6=="AG")
-#	if(length(w)>0){controlsnps.chr$V6[w]<-"CT"}
-#    w<-which(controlsnps.chr$V5=="-"&controlsnps.chr$V6=="AC")
-#	if(length(w)>0){controlsnps.chr$V6[w]<-"GT"}
-#
-#	m<-match(controlsnps.chr$V3,chr$V4)
-#	chr<-chr[na.omit(m),]
-#	m<-match(chr$V4,controlsnps.chr$V3)
-#	controlsnps.chr<-controlsnps.chr[m,]
-#    strand.check<-sum(controlsnps.chr$V6==chr$alleles,na.rm=T)/nrow(controlsnps.chr)
-#    message("Chr ", i, " proportion in agreement: ", strand.check)	
-#	if(strand.check<0.75)
-#	{
-#		msg <- paste0("please check strand for chromosome ",i," as more than 25% of your SNPs have strand issues")
-#		errorlist <- c(errorlist, msg)
-#		warning("ERROR: ", msg)
-#	}
-#}
+message("Checking strand against control SNPs")
+for (i in 1:22)
+{
+	chr <- bim2[which(bim2[,1] %in% i),]
+	controlsnps.chr <- na.omit(controlsnps[which(controlsnps$V2 %in% i), ])
+	controlsnps.chr$V6<-as.character(controlsnps.chr$V6)
+	w<-which(controlsnps.chr$V5=="-"&controlsnps.chr$V6=="AG")
+	if(length(w)>0){controlsnps.chr$V6[w]<-"CT"}
+    w<-which(controlsnps.chr$V5=="-"&controlsnps.chr$V6=="AC")
+	if(length(w)>0){controlsnps.chr$V6[w]<-"GT"}
+
+	m<-match(controlsnps.chr$V3,chr$V4)
+	chr<-chr[na.omit(m),]
+	m<-match(chr$V4,controlsnps.chr$V3)
+	controlsnps.chr<-controlsnps.chr[m,]
+    strand.check<-sum(controlsnps.chr$V6==chr$alleles,na.rm=T)/nrow(controlsnps.chr)
+    message("Chr ", i, " proportion in agreement: ", strand.check)	
+	if(strand.check<0.75)
+	{
+		msg <- paste0("please check strand for chromosome ",i," as more than 25% of your SNPs have strand issues")
+		errorlist <- c(errorlist, msg)
+		warning("ERROR: ", msg)
+	}
+}
 
 message("Checking for duplicate SNPs")
 if(any(duplicated(bim[,2])))
@@ -94,27 +94,28 @@ if(any(duplicated(bim[,2])))
 
 message("Checking imputation quality scores: ", quality_file)
 qual <- as.data.frame(fread(quality_file,header=T))
-
-if(ncol(qual) != 3)
+qual2<-qual[complete.cases(qual),]
+if(ncol(qual2) != 3)
 {
 	msg <- paste0("Expecting 3 columns in the imputation quality file: SNP ID, MAF and quality score.")
 	errorlist <- c(errorlist, msg)
 	warning("ERROR: ", msg)
 }
 
-if(any(qual[,2] < 0) | any(qual[,2] > 1))
+if(any(qual2[,2] < 0) | any(qual2[,2] > 1))
 {
 	msg <- paste0("Second column of quality scores file should be MAF. Some of the provided values fall outside the range of 0-1")
 	errorlist <- c(errorlist, msg)
 	warning("ERROR: ", msg)
 }
 
-if(any(qual[,3] > 1.1))
+if(any(qual2[,3]>1.1))
 {
-	msg <- paste0("Third column of quality scores file should be the info score. Some of the provided values are above 1.")
-	msg <- c(errorlist, msg)
-	warning("ERROR: ", msg)
+msg<-paste0("Third column of quality scores file should be the info score. Some of the provided values are above 1.")
+msg<-c(errorlist,msg)
+warning("ERROR: ", msg)
 }
+
 
 prop <- sum(bim[,2] %in% qual[,1]) / nrow(bim)
 if(prop < 0.95)
