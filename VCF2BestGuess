@@ -1,13 +1,14 @@
 #!/bin/bash
 for i in {1..23}
 do
-   vcftools --gzvcf chr$i.vcf.gz --plink --chr $i --out chr$i
-   plink1.90 --ped chr$i.ped --map chr$i.map --make-bed --out data_chr${i}_filtered 
+
+vcftools --gzvcf chr$i.vcf.gz --plink --chr $i --out chr$i
+plink --ped chr$i.ped --map chr$i.map --make-bed --out data_chr${i}_filtered 
    
-   # Rename the SNP IDs if necessary to avoid possible duplicates
+# Rename the SNP IDs if necessary to avoid possible duplicates
     
-   cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig
-   awk '{
+cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig
+awk '{
        if (($5 == "A" || $5 == "T" || $5 == "C" || $5=="G") &&  ($6 == "A" || $6 == "T" || $6 == "C" || $6=="G")) 
             print $1, "chr"$1":"$4":SNP", $3, $4, $5, $6;
    else 
@@ -15,26 +16,27 @@ do
    }' data_chr${i}_filtered.bim.orig > data_chr${i}_filtered.bim
   
 
-   # Keep SNPs with MAF>0.01 or info>0.8
-   plink1.90 --bfile data_chr${i}_filtered --make-bed --out data_chr${i}_filtered --extract data_chr${i}.keep
+# Keep SNPs with MAF>0.01 or info>0.8
+   
+plink --bfile data_chr${i}_filtered --make-bed --out data_chr${i}_filtered --extract data_chr${i}.keep
    
    # For simplicity remove any duplicates
 
-   cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig2
+cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig2
    awk '{
        if (++dup[$2] > 1) { 
            print $1, $2".duplicate."dup[$2], $3, $4, $5, $6 
        } else { 
            print $0 }
    }' data_chr${i}_filtered.bim.orig2 > data_chr${i}_filtered.bim
-   grep "duplicate" data_chr${i}_filtered.bim | awk '{ print $2 }' > duplicates.chr${i}.txt
+grep "duplicate" data_chr${i}_filtered.bim | awk '{ print $2 }' > duplicates.chr${i}.txt
     
-   plink1.90 --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered
+plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed --out data_chr${i}_filtered
 
 
-   # Remove duplicates from maf/info file
-   cp data_chr${i}.info data_chr${i}.info.orig
-   awk '{
+# Remove duplicates from maf/info file
+cp data_chr${i}.info data_chr${i}.info.orig
+awk '{
        if (++dup[$1] > 1) {
            print $1".duplicate."dup[$1], $2, $3
        } else {
@@ -51,7 +53,7 @@ do
     echo "data_chr${i}_filtered"
 done > mergefile.txt
 
-plink1.90 --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out data_filtered
+plink --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out data_filtered
 
 # Combine info files into a single file
 
