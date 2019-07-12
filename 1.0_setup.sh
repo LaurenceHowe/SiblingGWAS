@@ -78,7 +78,6 @@ then
 fi
 
 #Check siblings file
-#To be tweaked
 
 if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
 then
@@ -89,7 +88,9 @@ then
 	--genome \
 	--rel-check \
 	--out ${section_01_dir}/rel
-		
+	
+	Rscript resources/siblings/checks.R \
+		${section_01_dir}/rel.genome
 fi
 
 #Check covariate file
