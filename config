@@ -14,7 +14,7 @@ analyst_email="lh14833@bristol.ac.uk"
 # Please put the full path to this directory
 # e.g. you can find this by using the pwd command in the terminal
 
-home_directory="/mnt/storage/home/lh14833/Test/SiblingGWAS"
+home_directory="/mnt/storage/scratch/lh14833/SiblingGWAS"
 
 bfile_raw="/mnt/storage/private/mrcieu/users/lh14833/private/data_filtered"
 covariates="/mnt/storage/home/lh14833/Test/input_data/example-cov.txt"
