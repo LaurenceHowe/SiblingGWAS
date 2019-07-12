@@ -88,7 +88,7 @@ then
 	--extract ${snplist} \
 	--genome \
 	--rel-check \
-	--out rel
+	--out ${section_01_dir}/rel
 		
 fi
 
