@@ -50,7 +50,6 @@ ${gwasoutcome}
 #Remove .raw file
 rm ${section_04_dir}/temp.${i}*
 rm ${section_03_dir}/extract${k}
-)
-done
+
 
 echo "Completed analysis"
