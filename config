@@ -29,7 +29,7 @@ quality_scores="/mnt/storage/private/mrcieu/users/lh14833/private/data_filtered.
 nthreads="16"
 
 # Splitting data-set into chunks of e.g. 100,000 SNPs to run in batch
-chunks_snp_number="100000"
+chunks_snp_number="10000"
 
 # DO NOT MODIFY
 
