@@ -21,7 +21,7 @@ containsElement () {
 }
 
 arg="all"
-declare -a sections=('all' 'config' 'requirements' 'genetics' 'siblings' 'covariates' 'phenotypes')
+declare -a sections=('all' 'config' 'requirements' 'genetics' 'rel' 'siblings' 'covariates' 'phenotypes')
 
 
 if [ -n "${1}" ]; then
@@ -77,18 +77,24 @@ then
 		${controlsnps_file} 
 fi
 
-#Check siblings file
+#Generate relatedness checks
 
-if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
+if [ "$arg" = "rel" ] || [ "$arg" = "all" ]
 then
-	section_message "siblings"
+	section_message "Relatedness checks"
 	plink \
 	--bfile ${bfile_raw} \
 	--extract ${snplist} \
 	--genome \
 	--rel-check \
 	--out ${section_01_dir}/rel
-	
+fi
+
+#Sibling checks
+
+if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
+then
+	section_message "Sibling checks"
 	Rscript resources/siblings/checks.R \
 		${section_01_dir}/rel.genome
 fi
