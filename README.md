@@ -61,7 +61,8 @@ c) Third column should be INFO score. <br/>
 Summary statistics file with: <br/>
 SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
 
-<b> SCRIPTS: </b>
+<b> SCRIPTS: </b>  
+
 <b> config file </b>
 
 File to be edited with paths to relevant input files. <br/>
@@ -91,4 +92,4 @@ This script compiles the output into a final summary statistics file.
 <br>
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
-Note scripts were adapted from scripts by Gibran Hemani (GoDMC) & Sean Lee (SSGAC). 
+Note scripts were adapted from scripts by GoDMC (Gibran Hemani) and the SSGAC (Sean Lee). See the Wiki for more information!
