@@ -5,7 +5,7 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 <br>
 <b> Basic Requirements </b>
 
-1) <b> Siblings</b>. Consider all families with one or more pairs of genotyped dizygotic siblings. From these families, include all siblings. For example, in a family with a pair of monozygotic twins and an additional sibling, include both MZ twins and the sibling. The inclusion of both MZ twins should (very) modestly improve power by accounting for variation in the phenotypic outcome.  
+1) <b> Siblings</b>. The analysis pipeline requires data on siblings. We suggest including all siblings from families with one or more pairs of genotyped dizygotic siblings. For example, in a family with a pair of monozygotic twins and an additional sibling, include both MZ twins and the sibling. The inclusion of both MZ twins should (very) modestly improve power by accounting for variation in the phenotypic outcome.
 If siblings have not been previously identified in the dataset, we suggest using KING (http://people.virginia.edu/~wc9c/KING/manual.html) to infer siblings.
 2) <b> Imputed genotype data</b>. The analysis scripts use best guess genotype data in PLINK binary format. We have provided scripts to convert different file formats (vcf, bgen) to PLINK binary best guess format.
 3) <b> Phenotypes</b>. Phenotype data for siblings on outcomes of interest which include height and body mass index.
