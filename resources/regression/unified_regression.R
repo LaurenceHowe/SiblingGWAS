@@ -59,6 +59,30 @@ for (i in 1:length(Variants)) {
     # Extract total effect
     fit <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX, data=ped2)
     
+    #Save Beta information
+    output$BETA_TOTAL[i]<-fit$coefficients[2]
+    
+    # save the variance covariance matrix to cluster SEs by family
+    vcv_matrix = vcovCL(fit, cluster=ped3$FID)
+    if(  is.na(output$BETA_TOTAL[i])) {
+        output$VCV_TOTAL[i] <-NA
+    } else {
+        output$VCV_TOTAL[i] <- vcv_matrix[2,2]
+ 
+    }
+
+    #Derive the clustered SEs for the total effect and P-values
+    test_matrix <- coeftest(fit, vcov.=vcv_matrix)
+    if(  is.na(output$BETA_TOTAL[i]) ) {
+        output$SE_TOTAL[i] <- NA
+        output$P_TOTAL[i] <- NA
+    } else {
+        output$SE_TOTAL[i] <- test_matrix[2,2] 
+        output$P_TOTAL[i] <- test_matrix[2,4] 
+ 
+    }
+    
+    #Centre genotype around family mean
     ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
@@ -71,27 +95,7 @@ for (i in 1:length(Variants)) {
     output$BETA_0[i] <- fit2$coefficients[1]
     output$BETA_BF[i] <- fit2$coefficients[2]
     output$BETA_WF[i] <- fit2$coefficients[3]
-    output$BETA_TOTAL[i]<-fit$coefficients[2]
     
-     # save the variance covariance matrix
-    vcv_matrix = vcovCL(fit, cluster=ped3$FID)
-    if(  is.na(output$BETA_TOTAL[i])) {
-        output$VCV_TOTAL[i] <-NA
-    } else {
-        output$VCV_TOTAL[i] <- vcv_matrix[2,2]
- 
-    }
-
-    #save the clustered SEs for the total effect and P-values
-    test_matrix <- coeftest(fit, vcov.=vcv_matrix)
-    if(  is.na(output$BETA_TOTAL[i]) ) {
-        output$SE_TOTAL[i] <- NA
-        output$P_TOTAL[i] <- NA
-    } else {
-        output$SE_TOTAL[i] <- test_matrix[2,2] 
-        output$P_TOTAL[i] <- test_matrix[2,4] 
- 
-    }
     
     # save the variance covariance matrix
     vcv_matrix = vcovCL(fit2, cluster=ped3$FID)
