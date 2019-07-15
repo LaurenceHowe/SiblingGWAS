@@ -39,7 +39,16 @@ if(nrow(relPARENTS)>0)
 	errorlist<-c(errorlist, msg)
 	warning("ERROR: ", msg)
 	}
-    
+	  
+#Check for low IBD
+relLOW<-rel[which(rel$PI_HAT<0.3),]
+if(nrow(relLOW)>0)
+	{
+	msg <-paste0("Identified pair in same family with IBD estimate <0.3: Please check or remove the following families: IDs ", data[1])
+	errorlist<-c(errorlist, msg)
+	warning("ERROR: ", msg)
+	}
+	  
 message("\n\nCompleted checks\n")
 
 if(length(errorlist) > 0)
