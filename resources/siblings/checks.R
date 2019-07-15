@@ -25,7 +25,6 @@ if(nrow(data)<2)
 	errorlist<-c(errorlist, msg)
 
 	warning("ERROR: ", msg)
-  write.table(
 	}
 }
 
