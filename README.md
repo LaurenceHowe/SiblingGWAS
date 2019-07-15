@@ -56,11 +56,12 @@ a) First column should be SNP id. <br/>
 b) Second column should be minor allele frequency. <br/>
 c) Third column should be INFO score. <br/>
 
-<b> OUTPUT </b>
+<b> OUTPUT FILE: </b>
 
 Summary statistics file with: <br/>
 SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
 
+<b> SCRIPTS: </b>
 <b> config file </b>
 
 File to be edited with paths to relevant input files. <br/>
