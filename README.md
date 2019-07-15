@@ -14,6 +14,7 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 <b> Imputed genotype data:</b> <br/>
   
 a) PLINK binary format (.bed .bim .fam) with one file containing all 23 chromosomes. <br/>
+  
 b) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
 <br/>
 For example, the following IIDs are not unique: <br/>
@@ -22,7 +23,7 @@ Family1 Sibling2 <br/>
 Family2 Sibling1 <br/>
 Family2 Sibling2 <br/>
 <br/>
-c) The SNP IDs in the second column of the .bim file should be in CHR:BP format with SNP or INDEL.  
+c) The SNP IDs in the second column of the .bim file should be in CHR:BP format with markers labelled as SNP or INDEL.  
 
 For example:  
 
@@ -41,15 +42,15 @@ g) Filtered variants such that INFO > 0.3 & MAF > 0.01.
 
 
 <b>Covariate file in tab delimited format. </b>
-a) First column should be IID. <br/>
-b) Second or third column should contain Age (years), labelled as "Age". <br/>
-c) Second or third column should contain Sex, labelled as "Sex". Males should be coded as 1 and females as 0. <br/>
+a) First column should be FID/IID. <br/>
+b) Third or fourth column should contain Age (years), labelled as "Age". <br/>
+c) Third or fourth column should contain Sex, labelled as "Sex". Males should be coded as 1 and females as 0. <br/>
 
-3) Phenotype file in tab delimited format. <br/>
-a) First column should be IID. <br/>
+<b>Phenotype file in tab delimited format. </b>
+a) First two columns should be FID/IID. <br/>
 b) Rest of columns should contain available phenotypes labelled as follows: "Height" "BMI". <br/>
 
-4) SNP INFO file in tab delimited format. <br/>
+<b> SNP INFO file in tab delimited format. </b> <br/>
 a) First column should be SNP id. <br/>
 b) Second column should be minor allele frequency. <br/>
 c) Third column should be INFO score. <br/>
