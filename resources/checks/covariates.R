@@ -29,9 +29,16 @@ phen<-fread(phen_file, h=T)
 
 #Check IDs
 
-if(names(cov)[1] !="IID")
+if(names(cov)[1] !="FID")
 	{
-	msg <- paste0("First column in covariate file should be the sample identified with the name IID")
+	msg <- paste0("First column in covariate file should be the FID")
+	errorlist <-c(errorlist, msg)
+	warning("ERROR: ", msg)
+	}
+
+if(names(cov)[2] !="IID")
+	{
+	msg <- paste0("Second column in covariate file should be the sample identified with the name IID")
 	errorlist <-c(errorlist, msg)
 	warning("ERROR: ", msg)
 	}
