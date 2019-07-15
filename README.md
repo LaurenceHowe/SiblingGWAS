@@ -11,7 +11,7 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 <br>
 <b> INPUT FILES: </b>
 
-<b> Imputed genotype data:<b/> <br/>
+<b> Imputed genotype data:</b> <br/>
   
 a) PLINK binary format (.bed .bim .fam). <br/>
 b) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
