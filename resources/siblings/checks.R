@@ -34,16 +34,19 @@ relPARENTS<-rel[which(rel$Z1>0.98),]
 
 if(nrow(relPARENTS)>0)
 	{
-	msg <-paste0("Identified Parent-offspring pairs: Please check or remove the following families: IDs ", data[1])
+	for (i in 1:length(relPARENTS)) {
+	msg <-paste0("Identified Parent-offspring pairs: Please check or remove the following families: IDs ", relPARENTS[i,1])
 	errorlist<-c(errorlist, msg)
 	warning("ERROR: ", msg)
+	}
 	}
 	  
 #Check for low IBD
 relLOW<-rel[which(rel$PI_HAT<0.3),]
 if(nrow(relLOW)>0)
 	{
-	msg <-paste0("Identified pair in same family with IBD estimate <0.3: Please check or remove the following families: IDs ", data[1])
+	for (i in 1:length(relPARENTS)) {
+	msg <-paste0("Identified pair in same family with IBD estimate <0.3: Please check or remove the following families: IDs ", relLOW[i,1])
 	errorlist<-c(errorlist, msg)
 	warning("ERROR: ", msg)
 	}
