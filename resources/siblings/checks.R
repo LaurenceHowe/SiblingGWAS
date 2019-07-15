@@ -50,6 +50,7 @@ if(nrow(relLOW)>0)
 	errorlist<-c(errorlist, msg)
 	warning("ERROR: ", msg)
 	}
+	}
 	  
 message("\n\nCompleted checks\n")
 
