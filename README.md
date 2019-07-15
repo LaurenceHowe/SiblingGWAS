@@ -43,7 +43,7 @@ g) Filtered variants such that INFO > 0.3 & MAF > 0.01.
 
 
 <b>Covariate file in tab delimited format. </b> <br/>
-a) First column should be FID/IID. <br/>
+a) First two columns should be FID/IID. <br/>
 b) Third or fourth column should contain Age (years), labelled as "Age". <br/>
 c) Third or fourth column should contain Sex, labelled as "Sex". Males should be coded as 1 and females as 0. <br/>
 
