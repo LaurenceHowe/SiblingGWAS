@@ -12,7 +12,6 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 <b> INPUT FILES: </b>
 
 1) Imputed genotype data <br/>
-<br/>
 a) PLINK binary format (.bed .bim .fam). <br/>
 b) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
 <br/>
@@ -22,7 +21,17 @@ Family1 Sibling2 <br/>
 Family2 Sibling1 <br/>
 Family2 Sibling2 <br/>
 <br/>
-c) The SNP IDs in the .bim file should be in CHR:BP format. <br/>
+c) The SNP IDs in the second column of the .bim file should be in CHR:BP format with SNP or INDEL.  
+
+For example:  
+
+1       chr1:10177:INDEL        0       10177   AC      A  
+
+1       chr1:10352:INDEL        0       10352   TA      T  
+
+1       chr1:11008:SNP          0       11008   G       C
+  
+  
 d) Genotype data should be on build 37. <br/>
 e) Genotype data should be merged into one file across chromosomes. <br/>
 f) Chromosomes should be numbered 1-23 in .bim file. <br/>
