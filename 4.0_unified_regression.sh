@@ -48,7 +48,7 @@ ${section_04_dir}/output.${batch_number}.${gwasoutcome} \
 ${gwasoutcome}
 
 #Remove .raw file
-rm ${section_04_dir}/temp.${i}.${gwasoutcome}.*
+rm ${section_04_dir}/temp.${batch_number}.${gwasoutcome}.*
 rm ${section_03_dir}/extract${k}
 
 
