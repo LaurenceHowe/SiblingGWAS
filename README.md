@@ -1,11 +1,20 @@
 # SiblingGWAS
 
 Scripts for running GWAS using siblings to estimate Within-Family (WF) and Between-Family (BF) effects of genetic variants on continuous traits. Allows the inclusion of more than two siblings from one family.
+<br>
+<br>
+<b> Basic Requirements </b>
 
-<b> INPUT FILES required: </b>
-1) Imputed genotype data in PLINK binary format (.bed .bim .fam). <br/>
+1) <b> Siblings</b>. Consider all families with one or more pairs of genotyped dizygotic siblings. From these families, include all siblings. For example, in a family with a pair of monozygotic twins and an additional sibling, include both MZ twins and the sibling. If siblings have not been previously identified in the dataset, we suggest using KING (http://people.virginia.edu/~wc9c/KING/manual.html) to infer siblings.
+2) <b> Imputed genotype data</b>. The analysis scripts use best guess genotype data in PLINK binary format. We have provided scripts to convert other file formats (vcf, bgen) to PLINK binary best guess format.
+3) <b> Phenotypes </b>. Phenotype data for siblings on outcomes of interest which include height and body mass index.
+<br>
+<b> INPUT FILES: </b>
+
+1) Imputed genotype data <br/>
 <br/>
-a) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
+a) PLINK binary format (.bed .bim .fam). <br/>
+b) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
 <br/>
 For example, the following IIDs are not unique: <br/>
 Family1 Sibling1 <br/>
@@ -13,8 +22,7 @@ Family1 Sibling2 <br/>
 Family2 Sibling1 <br/>
 Family2 Sibling2 <br/>
 <br/>
-b) Siblings are defined as follows: <br/>
-c) SNPS should be in CHR:BP format. <br/>
+c) The SNP IDs in the .bim file should be in CHR:BP format. <br/>
 d) Genotype data should be on build 37. <br/>
 e) Genotype data should be merged into one file across chromosomes. <br/>
 f) Chromosomes should be numbered 1-23 in .bim file. <br/>
