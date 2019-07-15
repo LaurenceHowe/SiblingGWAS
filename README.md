@@ -41,12 +41,12 @@ f) Chromosomes should be numbered 1-23 in .bim file.
 g) Filtered variants such that INFO > 0.3 & MAF > 0.01.  
 
 
-<b>Covariate file in tab delimited format. </b>
+<b>Covariate file in tab delimited format. </b> <br/>
 a) First column should be FID/IID. <br/>
 b) Third or fourth column should contain Age (years), labelled as "Age". <br/>
 c) Third or fourth column should contain Sex, labelled as "Sex". Males should be coded as 1 and females as 0. <br/>
 
-<b>Phenotype file in tab delimited format. </b>
+<b>Phenotype file in tab delimited format. </b> <br/>
 a) First two columns should be FID/IID. <br/>
 b) Rest of columns should contain available phenotypes labelled as follows: "Height" "BMI". <br/>
 
@@ -89,4 +89,4 @@ This script compiles the output into a final summary statistics file.
 <br>
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
-Note scripts were adapted from scripts by Gibran Hemani & Sean Lee.
+Note scripts were adapted from scripts by Gibran Hemani (GoDMC) & Sean Lee (SSGAC). 
