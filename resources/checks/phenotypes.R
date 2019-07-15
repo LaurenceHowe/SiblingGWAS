@@ -41,9 +41,16 @@ g_ids <- read.table(genotype_ids, h=F, stringsAsFactors=F)
 
 #Check phenotype file
 
-if(names(ph)[1] !="IID")
+if(names(ph)[1] !="FID")
 	{
-	msg <- paste0("First column in phenotype file should be the sample identified with the name IID")
+	msg <- paste0("First column in phenotype file should contain FID")
+	errorlist <-c(errorlist, msg)
+	warning("ERROR: ", msg)
+	}
+
+if(names(ph)[2] !="IID")
+	{
+	msg <- paste0("Second column in phenotype file should be the sample identified with the name IID")
 	errorlist <-c(errorlist, msg)
 	warning("ERROR: ", msg)
 	}
