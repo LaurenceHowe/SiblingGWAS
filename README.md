@@ -51,8 +51,8 @@ c) Third or fourth column should contain Sex, labelled as "Sex". Males should be
 a) First two columns should be FID/IID. <br/>
 b) Rest of columns should contain available phenotypes labelled as follows: "Height" "BMI". <br/>
 
-<b> SNP INFO file in tab delimited format. </b> <br/>
-a) First column should be SNP id. <br/>
+<b> INFO file in tab delimited format. </b> <br/>
+a) First column should contain variant ID in CHR:BP format described above. <br/>
 b) Second column should be minor allele frequency. <br/>
 c) Third column should be INFO score. <br/>
 
