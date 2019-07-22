@@ -92,4 +92,4 @@ This script compiles the output into a final summary statistics file.
 <br>
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
-Note scripts were adapted from scripts by GoDMC (Gibran Hemani) and the SSGAC (Sean Lee). See the Wiki for more information!
+Note scripts were adapted from scripts by GoDMC (Gibran Hemani et al) and the SSGAC (Sean Lee/Patrik Turley et al). See the Wiki for more information!
