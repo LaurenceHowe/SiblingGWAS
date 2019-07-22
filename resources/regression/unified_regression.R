@@ -63,7 +63,7 @@ for (i in 1:length(Variants)) {
     output$BETA_TOTAL[i]<-fit$coefficients[2]
     
     # save the variance covariance matrix to cluster SEs by family
-    vcv_matrix = vcovCL(fit, cluster=ped3$FID)
+    vcv_matrix = vcovCL(fit, cluster=ped2$FID)
     if(  is.na(output$BETA_TOTAL[i])) {
         output$VCV_TOTAL[i] <-NA
     } else {
