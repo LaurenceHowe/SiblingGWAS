@@ -107,7 +107,8 @@ then
 	Rscript resources/checks/covariates.R \
 		${covariates} \
 		${bfile_raw}.fam \
-		${phenotypes} 
+		${phenotypes} \
+		${covariate_list}
 fi
 
 #Check phenotype file
