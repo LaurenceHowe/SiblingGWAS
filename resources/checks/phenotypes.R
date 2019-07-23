@@ -128,7 +128,7 @@ if("BMI" %in% nom)
 	}
 }
 
-write.table(names(ph)[-1], file=gwas_phenotype_list_file, row=F, col=F, qu=F)
+write.table(names(ph)[-2], file=gwas_phenotype_list_file, row=F, col=F, qu=F)
 
 
 message("\n\nCompleted checks\n")
