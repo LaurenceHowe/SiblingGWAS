@@ -8,6 +8,7 @@ args <- (commandArgs(TRUE));
 cov_file <- as.character(args[1]);
 fam_file <- as.character(args[2]);
 phen_file <-as.character(args[3]);
+gwas_cov_list_file <- as.character(args[4])
 
 message("Checking covariates: ", cov_file)
 
@@ -44,7 +45,6 @@ if(names(cov)[2] !="IID")
 	}
 
 commonids_cpg <- Reduce(intersect, list(cov$IID, phen$IID, fam[,2]))
-
 message("Number of samples with covariate, genetic and phenotype data: ", length(commonids_cpg))
 
 
@@ -52,13 +52,9 @@ message("Number of samples with covariate, genetic and phenotype data: ", length
 if(length(commonids_cpg) < 50)
 
 {
-
 	msg <- paste0("must have at least 50 individuals with covariate, genetic and phenotype data.")
-
 	errorlist <- c(errorlist, msg)
-
 	warning("ERROR: ", msg)
-
 }
 
 #Check Sex
@@ -119,6 +115,7 @@ if(length(age)<1)
   
   cov <- subset(cov, IID %in% commonids_cpg)
 
+write.table(names(cov)[-2:-1], file=gwas_cov_list_file, row=F, col=F, qu=F)
 
 message("\n\nCompleted checks\n")
 
