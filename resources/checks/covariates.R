@@ -8,7 +8,7 @@ args <- (commandArgs(TRUE));
 cov_file <- as.character(args[1]);
 fam_file <- as.character(args[2]);
 phen_file <-as.character(args[3]);
-gwas_cov_list_file <- as.character(args[4])
+cov_list_file <- as.character(args[4])
 
 message("Checking covariates: ", cov_file)
 
@@ -115,7 +115,7 @@ if(length(age)<1)
   
   cov <- subset(cov, IID %in% commonids_cpg)
 
-write.table(names(cov)[-2:-1], file=gwas_cov_list_file, row=F, col=F, qu=F)
+write.table(names(cov)[-2:-1], file=cov_list_file, row=F, col=F, qu=F)
 
 message("\n\nCompleted checks\n")
 
