@@ -11,5 +11,7 @@ exec &> >(tee ${section_01_logfile})
 Rscript resources/summary/summary.R \
 		${phenotypes} \
 		${covariates} \
-		${phenotype_list} 
+		${phenotype_list} \
+		${covariate_list} \
+		${summary_file}
 		 
