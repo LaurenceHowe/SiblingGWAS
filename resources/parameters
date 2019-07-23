@@ -21,7 +21,7 @@ snplist="${home_directory}/resources/genetics/snplist.txt"
 # phenotypes present in the dataset
 covariate_list="${section_01_dir}/covariate_list.txt"
 
-# phenotypes present in the dataset
+# covariates present in the dataset
 phenotype_list="${section_01_dir}/phenotype_list.txt"
 
 #summary data
