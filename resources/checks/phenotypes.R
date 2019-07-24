@@ -89,20 +89,21 @@ g_ids<-subset(g_ids, V2%in%commonids_cpg)
 	
 #Phenotype checks
 
-#Pairs with phenotype data for only one sibling
+#Identify pairs with phenotype data for only one sibling
 phenlist<-names(ph)[-2:-1]
 famlist<-unique(ph$FID)
 for (i in 1:length(phenlist)) {
 		temp<-paste(phenlist[i])
 		ph2<-subset(ph, select=c("FID", "IID", temp))
-	for (j in 1:length(famlist) {
-		temp<-paste(famlist[j])
-		ph3<-ph2[which(ph2$FID==temp),]
-		ph4<-ph4[complete.cases(ph3)]
+	for (j in 1:length(famlist)) {
+		temp2<-paste(famlist[j])
+		ph3<-ph2[which(ph2$FID==temp2),]
+		names(ph3)<-c("FID", "IID", "Phenotype")
+		ph4<-ph3[which(!is.na(ph3$Phenotype)),]
 		number<-nrow(ph4)
 		if(number==1)
 	{
-	msg <- paste0("please set phenotype to missing if only one sibling has phenotype data" ph4$FID[1])
+	msg <- paste0("please set phenotype to missing if only one sibling has phenotype data FID:"," ",ph4$FID[1]," ",temp)
 	errorlist <- c(errorlist, msg)
 	warning("ERROR: ", msg)
 	}
