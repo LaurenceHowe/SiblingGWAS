@@ -89,7 +89,8 @@ g_ids<-subset(g_ids, V2%in%commonids_cpg)
 	
 #Phenotype checks
 
-#Identify pairs with phenotype data for only one sibling
+#Identify families with phenotype data for only one sibling
+message("Checking phenotype data for families with phenotype data for only one sibling.")
 phenlist<-names(ph)[-2:-1]
 famlist<-unique(ph$FID)
 for (i in 1:length(phenlist)) {
