@@ -54,10 +54,12 @@ for (i in 1:length(Variants)) {
 
 
     # Make a matrix with: [FID PHENOTYPE] [individ - family mean ] [family mean]
-    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$Outcome, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean), AGE=ped$Age, SEX=ped$Sex)
+    ped2 <- data.table(FID=ped$FID, PHENOTYPE=ped$Outcome, GENOTYPE=as.numeric(unlist(ped[,snp_ind, with=F])), FAM_MEAN=ave(as.numeric(unlist(ped[,snp_ind, with=F])), ped$FID, FUN=mean), AGE=ped$Age, SEX=ped$Sex,
+                       PC1=ped$PC1, PC2=ped$PC2, PC3=ped$PC3, PC4=ped$PC4, PC5=ped$PC5, PC6=ped$PC6, PC7=ped$PC7, PC8=ped$PC8, PC9=ped$PC9, PC10=ped$PC10,
+                       PC11=ped$PC11, PC12=ped$PC12, PC13=ped$PC13, PC14=ped$PC14, PC15=ped$PC15, PC16=ped$PC16, PC17=ped$PC17, PC18=ped$PC18, PC19=ped$PC19, PC20=ped$PC20)
     
     # Extract total effect
-    fit <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX, data=ped2)
+    fit <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped2)
     
     #Save Beta information
     output$BETA_TOTAL[i]<-fit$coefficients[2]
@@ -86,7 +88,7 @@ for (i in 1:length(Variants)) {
     ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
-    fit2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE + AGE + SEX, data=ped3)
+    fit2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
    
     # Sample size in regression
     output$N_REG[i] <- length(resid(fit2))
