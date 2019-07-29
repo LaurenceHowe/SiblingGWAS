@@ -14,7 +14,7 @@ If siblings have not been previously identified in the dataset, we suggest using
 
 <b> Imputed genotype data:</b> <br/>
   
-a) PLINK binary format (.bed .bim .fam) with one file containing all 23 chromosomes. <br/>
+a) PLINK binary format (.bed .bim .fam) with one file containing all 22 autosomes. <br/>
   
 b) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
 <br/>
@@ -37,7 +37,7 @@ For example:
   
 d) Genotype data should be on build 37.  
 
-f) Chromosomes should be numbered 1-23 in .bim file.  
+f) Chromosomes should be numbered 1-22 in .bim file.  
 
 g) Filtered variants such that INFO > 0.3 & MAF > 0.01.  
 
