@@ -113,6 +113,15 @@ if(length(age)<1)
   warning("ERROR: ", msg)
   }
   
+#Check principal components
+pccheck <- grep("PC", names(cov))
+if(length(pccheck)<20)
+	{
+	msg <-paste0("The first 20 principal components are not present in the covariate file. Please check that the columns are labelled correctly")
+	errorlist <-c(errorlist,msg)
+	warning("ERROR: ", msg)
+	}
+
   cov <- subset(cov, IID %in% commonids_cpg)
 
 write.table(names(cov)[-2:-1], file=cov_list_file, row=F, col=F, qu=F)
