@@ -18,7 +18,7 @@ home_directory="/mnt/storage/scratch/lh14833/SiblingGWAS"
 
 bfile_raw="/mnt/storage/private/mrcieu/users/lh14833/private/data_filtered"
 covariates="/mnt/storage/home/lh14833/Data/sibling-covariates.txt"
-phenotypes="/mnt/storage/home/lh14833/Data/sibling-phenotypes.txt"
+phenotypes="/mnt/storage/home/lh14833/Data/sibling-phenotypes-updated.txt"
 
 # Imputation quality scores
 # This should be a file with three columns, SNP, MAF and quality scores
