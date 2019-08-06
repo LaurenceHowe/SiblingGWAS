@@ -1,3 +1,11 @@
+#ARGUMENTS
+#1) Path of .bgen files (data.chr{i}.bgen)
+#2) File containing sibling IDs for filtering (Siblings.txt)
+
+#Requirements
+#1) Plink 1.90
+#2) QCtool
+
 
 #!/bin/bash
 for i in {1..22}
