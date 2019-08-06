@@ -67,7 +67,7 @@ awk '{
 fgrep -v -w -f duplicates.chr${i}.txt <data_chr${i}.info >chr${i}_filtered.info
 done
 
-for i in {2..23}
+for i in {2..22}
 do 
     echo "data_chr${i}_filtered"
 done > mergefile.txt
@@ -78,7 +78,7 @@ plink --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out tem
 
 head -n1 chr01_filtered.info > data_filtered.info
 
-for i in {1..23}
+for i in {1..22}
 do
     awk ' NR>1 {print $0}' < chr${i}_filtered.info |cat >> data_filtered.info
 done
