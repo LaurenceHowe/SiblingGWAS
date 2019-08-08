@@ -8,7 +8,7 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 1) <b> Siblings</b>. The analysis pipeline requires data on siblings. We suggest including all siblings from families with one or more pairs of genotyped dizygotic siblings. For example, in a family with a pair of monozygotic twins and an additional sibling, include both MZ twins and the sibling. The inclusion of both MZ twins should (very) modestly improve power by accounting for variation in the phenotypic outcome.
 If siblings have not been previously identified in the dataset, we suggest using KING (http://people.virginia.edu/~wc9c/KING/manual.html) to infer siblings.
 2) <b> Imputed genotype data</b>. The analysis scripts use best guess genotype data in PLINK binary format. We have provided scripts to convert different file formats (vcf, bgen) to PLINK binary best guess format satisfying the requirements below. See the wiki for more information.
-3) <b> Phenotypes</b>. Phenotype data for siblings on outcomes of interest which include height and body mass index.
+3) <b> Phenotypes</b>. Phenotype data for siblings on outcomes of interest (e.g. height and body mass index).
 <br>
 <b> INPUT FILES: </b>
 
@@ -49,7 +49,7 @@ c) Third or fourth column should contain Sex, labelled as "Sex". Males should be
 
 <b>Phenotype file in tab delimited format. </b> <br/>
 a) First two columns should be FID/IID. <br/>
-b) Rest of columns should contain available phenotypes labelled as follows: "Height" "BMI". <br/>
+b) Rest of columns should contain available phenotypes labelled as follows: "Height" "BMI" "Education" "LDL". <br/>
 
 <b> INFO file in tab delimited format. </b> <br/>
 a) First column should contain variant ID in CHR:BP format described above. <br/>
@@ -59,7 +59,7 @@ c) Third column should be INFO score. <br/>
 <b> OUTPUT FILE: </b>
 
 Summary statistics file with: <br/>
-SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates and BF estimates.
+SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates, BF estimates and total estimates.
 
 <b> SCRIPTS: </b>  
 
