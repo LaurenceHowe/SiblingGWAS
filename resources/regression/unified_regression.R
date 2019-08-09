@@ -169,8 +169,8 @@ vc_matrix<-vcovCL(fitsur, type="HC1",cluster)
  teststat<-nlWaldtest(fitsur, "b[3]/b[27]=1", Vcov = vc_matrix,coeff=coefficients(fitsur))
  
  #Extract coefficients
- SHRINK_BETA[i]<-(fitsur$coefficients[2]-fitsur$coefficients[3])/fitsur$coefficients[2]
- SHRINK_SE[i]<-SHRINK_BETA[i]/teststat$statistic
+ output$SHRINK_BETA[i]<-(fitsur$coefficients[2]-fitsur$coefficients[3])/fitsur$coefficients[2]
+ output$SHRINK_SE[i]<-output$SHRINK_BETA[i]/teststat$statistic
   
     if(i %% 1000 == 0) {
         print(paste0("Finished SNP ", i, " out of ",ncol(raw)-6)) 
