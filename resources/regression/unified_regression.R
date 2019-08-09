@@ -169,7 +169,7 @@ vc_matrix<-vcovCL(fitsur, type="HC1",cluster)
  teststat<-nlWaldtest(fitsur, "b[3]/b[27]=1", Vcov = vc_matrix,coeff=coefficients(fitsur))
  
  #Extract coefficients
- output$SHRINK_BETA[i]<-(fitsur$coefficients[3]-fitsur$coefficients[27])/fitsur$coefficients[3]
+ output$SHRINK_BETA[i]<-(fitsur$coefficients["total_GENOTYPE"]-fitsur$coefficients["wf_CENTREDGENOTYPE"])/fitsur$coefficients["total_GENOTYPE"]
  output$SHRINK_SE[i]<-output$SHRINK_BETA[i]/teststat$statistic
   
     if(i %% 1000 == 0) {
