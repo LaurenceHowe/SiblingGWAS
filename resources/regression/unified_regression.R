@@ -35,7 +35,13 @@ phencov<-merge(phen2,cov,by=c("FID", "IID"))
 ped<-merge(raw,phencov, by=c("FID", "IID"))
 
 # Create a new data.frame which will be filled with all necessary output information
-output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_REG=NA, BETA_0=NA, BETA_BF=NA, BETA_WF=NA, SE_BETA_0=NA, SE_BETA_BF=NA, SE_BETA_WF=NA, P_BETA_0=NA, P_BETA_BF=NA, P_BETA_WF=NA, VCV_0=NA, VCV_0_BF=NA, VCV_0_WF=NA, VCV_BF=NA, VCV_BF_WF=NA, VCV_WF=NA, VCV_TOTAL=NA, BETA_TOTAL=NA, SE_TOTAL=NA, P_TOTAL=NA)
+output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_REG=NA,
+                     BETA_MODEL1_0=NA, BETA_MODEL2_0=NA, BETA_TOTAL=NA, BETA_BF=NA, BETA_WF=NA,
+                     SE_BETA_MODEL1_0=NA, SE_BETA_MODEL2_0=NA, SE_BETA_TOTAL=NA, SE_BETA_BF=NA, SE_BETA_WF=NA,
+                     P_BETA_MODEL1_0=NA, P_BETA_MODEL2_0=NA, P_BETA_TOTAL=NA, P_BETA_BF=NA, P_BETA_WF=NA,
+                     VCV_MODEL1_0=NA, VCF_MODEl1_0_TOTAL=NA, VCV_MODEL1_TOTAL=NA, 
+                     VCV_MODEL2_0=NA, VCV_MODEL2_0_BF=NA, VCV_MODEL2_0_WF=NA, VCV_MODEL2_BF=NA, VCV_MODEL2_BF_WF=NA, VCV_MODEL2_WF=NA,
+                     SHRINK_BETA=NA, SHRINK_SE=NA)
 
 #---------------------------------------------------------------------------------------------#
 # loop over all SNPs in a chromosome (should take about 10 hrs)
@@ -58,14 +64,17 @@ for (i in 1:length(Variants)) {
                        PC1=ped$PC1, PC2=ped$PC2, PC3=ped$PC3, PC4=ped$PC4, PC5=ped$PC5, PC6=ped$PC6, PC7=ped$PC7, PC8=ped$PC8, PC9=ped$PC9, PC10=ped$PC10,
                        PC11=ped$PC11, PC12=ped$PC12, PC13=ped$PC13, PC14=ped$PC14, PC15=ped$PC15, PC16=ped$PC16, PC17=ped$PC17, PC18=ped$PC18, PC19=ped$PC19, PC20=ped$PC20)
     
+    #Centre genotype around family mean
+    ped3 <- na.omit(ped2[,CENTREDGENOTYPE:=GENOTYPE-FAM_MEAN])
+    
     # Extract total effect
-    fit <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped2)
+    model1 <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
     
     #Save Beta information
-    output$BETA_TOTAL[i]<-fit$coefficients[2]
+    output$BETA_TOTAL[i]<-model1$coefficients[2]
     
     # save the variance covariance matrix to cluster SEs by family
-    vcv_matrix = vcovCL(fit, cluster=ped2$FID)
+    vcv_matrix = vcovCL(model1, cluster=ped2$FID)
     if(  is.na(output$BETA_TOTAL[i])) {
         output$VCV_TOTAL[i] <-NA
     } else {
@@ -84,11 +93,9 @@ for (i in 1:length(Variants)) {
  
     }
     
-    #Centre genotype around family mean
-    ped3 <- na.omit(ped2[,GENOTYPE:=GENOTYPE-FAM_MEAN])
 
     # Run unified regression
-    fit2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + GENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
+    model2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + CENTREDGENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
    
     # Sample size in regression
     output$N_REG[i] <- length(resid(fit2))
