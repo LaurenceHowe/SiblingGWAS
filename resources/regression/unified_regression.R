@@ -162,7 +162,7 @@ fitsur <- systemfit(list(wf = r1, total = r2), data=ped3)
 
 #Clustering of SEs
 #Create list of clusters
-cluster<-c(merge$FID,merge$FID)
+cluster<-c(ped3$FID,ped3$FID)
 vc_matrix<-vcovCL(fitsur, type="HC1",cluster)
 
  #Non-linear wald test
