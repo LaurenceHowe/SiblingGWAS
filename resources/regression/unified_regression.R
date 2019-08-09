@@ -170,7 +170,7 @@ vc_matrix<-vcovCL(fitsur, type="HC1",cluster)
  
  #Extract coefficients
  output$SHRINK_BETA[i]<-(fitsur$coefficients["total_GENOTYPE"]-fitsur$coefficients["wf_CENTREDGENOTYPE"])/fitsur$coefficients["total_GENOTYPE"]
- output$SHRINK_SE[i]<-output$SHRINK_BETA[i]/teststat$statistic
+ output$SHRINK_SE[i]<-abs(output$SHRINK_BETA[i]/teststat$statistic)
   
     if(i %% 1000 == 0) {
         print(paste0("Finished SNP ", i, " out of ",ncol(raw)-6)) 
