@@ -110,9 +110,9 @@ for (i in 1:length(Variants)) {
     output$N_REG[i] <- length(resid(model2))
     
     # Save Beta information
-    output$BETA_MODEL2_0[i] <- fit2$coefficients[1]
-    output$BETA_BF[i] <- fit2$coefficients[2]
-    output$BETA_WF[i] <- fit2$coefficients[3]
+    output$BETA_MODEL2_0[i] <- model2$coefficients[1]
+    output$BETA_BF[i] <- model2$coefficients[2]
+    output$BETA_WF[i] <- model2$coefficients[3]
     
     
     # save the variance covariance matrix
