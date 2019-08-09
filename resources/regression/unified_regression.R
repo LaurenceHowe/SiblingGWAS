@@ -41,7 +41,7 @@ output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_
                      BETA_MODEL1_0=NA, BETA_MODEL2_0=NA, BETA_TOTAL=NA, BETA_BF=NA, BETA_WF=NA,
                      SE_BETA_MODEL1_0=NA, SE_BETA_MODEL2_0=NA, SE_BETA_TOTAL=NA, SE_BETA_BF=NA, SE_BETA_WF=NA,
                      P_BETA_MODEL1_0=NA, P_BETA_MODEL2_0=NA, P_BETA_TOTAL=NA, P_BETA_BF=NA, P_BETA_WF=NA,
-                     VCV_MODEL1_0=NA, VCF_MODEl1_0_TOTAL=NA, VCV_MODEL1_TOTAL=NA, 
+                     VCV_MODEL1_0=NA, VCF_MODEL1_0_TOTAL=NA, VCV_MODEL1_TOTAL=NA, 
                      VCV_MODEL2_0=NA, VCV_MODEL2_0_BF=NA, VCV_MODEL2_0_WF=NA, VCV_MODEL2_BF=NA, VCV_MODEL2_BF_WF=NA, VCV_MODEL2_WF=NA,
                      SHRINK_BETA=NA, SHRINK_SE=NA)
 
@@ -169,7 +169,7 @@ vc_matrix<-vcovCL(fitsur, type="HC1",cluster)
  teststat<-nlWaldtest(fitsur, "b[3]/b[27]=1", Vcov = vc_matrix,coeff=coefficients(fitsur))
  
  #Extract coefficients
- output$SHRINK_BETA[i]<-(fitsur$coefficients[2]-fitsur$coefficients[3])/fitsur$coefficients[2]
+ output$SHRINK_BETA[i]<-(fitsur$coefficients[3]-fitsur$coefficients[27])/fitsur$coefficients[3]
  output$SHRINK_SE[i]<-output$SHRINK_BETA[i]/teststat$statistic
   
     if(i %% 1000 == 0) {
