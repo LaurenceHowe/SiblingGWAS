@@ -1,6 +1,8 @@
 require(data.table)
 require(sandwich)
 require(lmtest)
+require(systemfit)
+require(nlWaldTest)
 
 # import argument
 arguments <- commandArgs(trailingOnly = T)
@@ -135,7 +137,7 @@ for (i in 1:length(Variants)) {
 
     # save the clustered SEs and corresponding P-values for WF/BF
     test_matrix <- coeftest(model2, vcov.=vcv_matrix)
-    if(  is.na(output$BETA_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
+    if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$SE_BETA_MODEL2_0[i] <- NA
         output$SE_BETA_BF[i] <- NA
         output$SE_BETA_WF[i] <- NA
@@ -151,6 +153,25 @@ for (i in 1:length(Variants)) {
         output$P_BETA_WF[i] <- test_matrix[3,4] 
     }
    
+  #Estimate the shrinkage parameter
+  
+r1<-PHENOTYPE ~ FAM_MEAN + CENTREDGENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20
+r2<-PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20
+
+fitsur <- systemfit(list(wf = r1, total = r2), data=ped3)
+
+#Clustering of SEs
+#Create list of clusters
+cluster<-c(merge$FID,merge$FID)
+vc_matrix<-vcovCL(fitsur, type="HC1",cluster)
+
+ #Non-linear wald test
+ teststat<-nlWaldtest(fitsur, "b[3]/b[27]=1", Vcov = vc_matrix,coeff=coefficients(fitsur))
+ 
+ #Extract coefficients
+ SHRINK_BETA[i]<-(fitsur$coefficients[2]-fitsur$coefficients[3])/fitsur$coefficients[2]
+ SHRINK_SE[i]<-SHRINK_BETA[i]/teststat$statistic
+  
     if(i %% 1000 == 0) {
         print(paste0("Finished SNP ", i, " out of ",ncol(raw)-6)) 
         print(Sys.time()) 
