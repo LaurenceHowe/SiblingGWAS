@@ -4,11 +4,11 @@ related <- as.character(arguments[1])
 message("Checking R version")
 
 currentr <- paste0(R.Version()['major'], ".", R.Version()['minor'])
-ch <- compareVersion(currentr, "3.4")
+ch <- compareVersion(currentr, "3.5")
 if(ch == -1)
 
 {
-	stop("You are running R version ", currentr, ". Please upgrade to at least 3.4.0.")
+	stop("You are running R version ", currentr, ". Please upgrade to at least 3.5.0.")
 }
 
 message("Checking that all required packages are present")
@@ -16,7 +16,9 @@ message("Checking that all required packages are present")
 pkglist <- c(
 	"lmtest",
 	"sandwich",
-	"data.table"
+	"data.table",
+	"nlWaldTest",
+	"systemfit"
 )
 
 index <- pkglist %in% rownames(installed.packages())
