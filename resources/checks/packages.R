@@ -17,8 +17,8 @@ pkglist <- c(
 	"lmtest",
 	"sandwich",
 	"data.table",
-	"nlWaldTest",
-	"systemfit"
+	"plyr",
+	"matrixStats"
 )
 
 index <- pkglist %in% rownames(installed.packages())
