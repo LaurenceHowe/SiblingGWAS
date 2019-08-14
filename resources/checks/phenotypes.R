@@ -9,6 +9,7 @@ phenotype_file <- as.character(args[1]);
 cov_file <- as.character(args[2]);
 genotype_ids <- as.character(args[3])
 gwas_phenotype_list_file <- as.character(args[4])
+updated_phenotype_file <- as.character(args[5])
 
 message("Checking phenotypes: ", phenotype_file)
 
