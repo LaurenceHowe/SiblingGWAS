@@ -1,7 +1,8 @@
 errorlist <- list()
 warninglist <- list()
 
-library(data.table)
+require(data.table)
+require(dplyr)
 suppressMessages(library(matrixStats))
 
 args <- (commandArgs(TRUE));
@@ -93,23 +94,42 @@ g_ids<-subset(g_ids, V2%in%commonids_cpg)
 message("Checking phenotype data for families with phenotype data for only one sibling.")
 phenlist<-names(ph)[-2:-1]
 famlist<-unique(ph$FID)
+check<-NULL
+
 for (i in 1:length(phenlist)) {
 		temp<-paste(phenlist[i])
 		ph2<-subset(ph, select=c("FID", "IID", temp))
-	for (j in 1:length(famlist)) {
-		temp2<-paste(famlist[j])
-		ph3<-ph2[which(ph2$FID==temp2),]
-		names(ph3)<-c("FID", "IID", "Phenotype")
-		ph4<-ph3[which(!is.na(ph3$Phenotype)),]
-		number<-nrow(ph4)
-		if(number==1)
+		names(ph2)<-c("FID", "IID", "Phenotype")
+		comp<-ph2[complete.cases(ph2$Phenotype),]
+		
+		counts<-count(comp, "FID")
+		counts$Pheno<-paste(temp)
+		counts2<-counts[which(counts$freq<2),]
+		number=nrow(counts2)
+		if(number>1)
 	{
-	msg <- paste0("please set phenotype to missing if only one sibling has phenotype data FID:"," ",ph4$FID[1]," ",temp)
+	msg <- paste0("Families present where only one sibling has phenotype data for"," ",temp )
+	msg2 <-paste0(": Updated phenotype file with these families set to missing will be written to updated_phenotypes.txt")
 	errorlist <- c(errorlist, msg)
-	warning("ERROR: ", msg)
+	warning("ERROR: ", msg," ",msg2)
+	check<-rbind(check, counts2)
 	}
-		}
-	     }
+	
+	     }	
+		 
+#Sets phenotype to missing for these individuals
+if(nrow(check)>1)
+	{
+for (i in 1:length(phenlist)) {
+		x<-i+2
+		temp<-paste(phenlist[i])
+		test<-check[which(check$Pheno==temp),]
+		ph[[x]][ph$FID%in%test$FID]<-NA
+}
+
+#Add path for updated file name
+write.table(ph, file=updated_phenotype_file, quote=F, row=F)		
+}
 		
 if("Height" %in% nom)
 {
