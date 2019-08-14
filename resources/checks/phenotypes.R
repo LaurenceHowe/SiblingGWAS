@@ -3,7 +3,6 @@ warninglist <- list()
 
 require(data.table)
 require(dplyr)
-suppressMessages(library(matrixStats))
 
 args <- (commandArgs(TRUE));
 phenotype_file <- as.character(args[1]);
