@@ -2,7 +2,7 @@ errorlist <- list()
 warninglist <- list()
 
 require(data.table)
-require(dplyr)
+require(plyr)
 
 args <- (commandArgs(TRUE));
 phenotype_file <- as.character(args[1]);
