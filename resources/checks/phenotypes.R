@@ -110,8 +110,8 @@ for (i in 1:length(phenlist)) {
 	{
 	msg <- paste0("Families present where only one sibling has phenotype data for"," ",temp )
 	msg2 <-paste0(": Updated phenotype file with these families set to missing will be written to updated_phenotypes.txt")
-	errorlist <- c(errorlist, msg)
-	warning("ERROR: ", msg," ",msg2)
+	warninglist <- c(warninglist, msg)
+	warning("WARNING: ", msg," ",msg2)
 	check<-rbind(check, counts2)
 	}
 	
