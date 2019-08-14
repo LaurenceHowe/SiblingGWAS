@@ -23,6 +23,7 @@ covariate_list="${section_01_dir}/covariate_list.txt"
 
 # covariates present in the dataset
 phenotype_list="${section_01_dir}/phenotype_list.txt"
+updated_phenotype_file="${section_01_dir}/updated_phenotypes.txt"
 
 #summary data
 summary_file=${section_02_dir}/phen-cov-summary.txt
