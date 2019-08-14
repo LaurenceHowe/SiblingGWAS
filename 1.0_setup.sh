@@ -120,7 +120,8 @@ then
 		${phenotypes} \
 		${covariates} \
 		${bfile_raw}.fam \
-		${phenotype_list}
+		${phenotype_list} \
+		${updated_phenotype_file}
 fi
 
 #Finish 
