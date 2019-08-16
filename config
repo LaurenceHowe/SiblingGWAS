@@ -12,7 +12,8 @@ analyst_name="Laurence Howe"
 analyst_email="lh14833@bristol.ac.uk"
 
 # Please put the full path to this directory
-# e.g. you can find this by using the pwd command in the terminal
+# e.g. if the config file path is "/home/Projects/SiblingGWAS/config" 
+#then home_directory="/home/Projects/SiblingGWAS"
 
 home_directory="/mnt/storage/scratch/lh14833/SiblingGWAS"
 
