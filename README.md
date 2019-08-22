@@ -88,6 +88,16 @@ This script runs the regressions in R.
 <b> 5.0_tidy </b> 
 
 This script compiles the output into a final summary statistics file.
+<br>
+<br>
+<b> Downloading and running the pipeline </b>
+
+The repository of scripts can be downloaded using the following command <br>
+git clone https://github.com/LaurenceHowe/SiblingGWAS/ <br>
+<br>
+Once the repository is downloaded, run the following command to check that files have downloaded properly: <br>
+head ./SiblingGWAS/resources/parameters 
+
 
 <br>
 <br>
