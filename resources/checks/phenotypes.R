@@ -106,7 +106,7 @@ for (i in 1:length(phenlist)) {
 		counts$Pheno<-paste(temp)
 		counts2<-counts[which(counts$freq<2),]
 		number=nrow(counts2)
-		if(number>1)
+		if(number>0)
 	{
 	msg <- paste0("Families present where only one sibling has phenotype data for"," ",temp )
 	msg2 <-paste0(": Updated phenotype file with these families set to missing will be written to updated_phenotypes.txt. Please rerun with this updated phenotype file!")
@@ -118,7 +118,7 @@ for (i in 1:length(phenlist)) {
 	     }	
 		 
 #Sets phenotype to missing for these individuals
-if(nrow(check)>1)
+if(number>0)
 	{
 for (i in 1:length(phenlist)) {
 		x<-i+2
