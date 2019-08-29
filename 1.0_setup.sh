@@ -21,7 +21,7 @@ containsElement () {
 }
 
 arg="all"
-declare -a sections=('all' 'config' 'requirements' 'genetics' 'rel' 'siblings' 'covariates' 'phenotypes')
+declare -a sections=('all' 'config' 'requirements' 'genetics' 'rel' 'siblings' 'covariates' 'phenotypes' 'skipsib')
 
 
 if [ -n "${1}" ]; then
@@ -44,7 +44,7 @@ section_message () {
 
 #Check study name
 
-if [ "$arg" = "config" ] || [ "$arg" = "all" ]
+if [ "$arg" = "config" ] || [ "$arg" = "all" ] || [ "$arg" = "skipsib" ]
 then
 	section_message "config"
 	if ! [[ "$study_name" =~ [^a-zA-Z0-9_\ ] ]] && ! [ "$study_name" = "" ]
@@ -59,7 +59,7 @@ fi
 
 #Check R version and packages
 
-if [ "$arg" = "requirements" ] || [ "$arg" = "all" ]
+if [ "$arg" = "requirements" ] || [ "$arg" = "all" ] || [ "$arg" = "skipsib" ]
 then
 	section_message "requirements"
     Rscript resources/checks/packages.R
@@ -67,7 +67,7 @@ fi
 
 #Check genotype file
 
-if [ "$arg" = "genetics" ] || [ "$arg" = "all" ]
+if [ "$arg" = "genetics" ] || [ "$arg" = "all" ] || [ "$arg" = "skipsib" ]
 then
 	section_message "genetics"
 	Rscript resources/checks/genetic_data.R \
@@ -101,7 +101,7 @@ fi
 
 #Check covariate file
 
-if [ "$arg" = "covariates" ] || [ "$arg" = "all" ]
+if [ "$arg" = "covariates" ] || [ "$arg" = "all" ] || [ "$arg" = "skipsib" ]
 then
 	section_message "covariates"
 	Rscript resources/checks/covariates.R \
@@ -113,7 +113,7 @@ fi
 
 #Check phenotype file
 
-if [ "$arg" = "phenotypes" ] || [ "$arg" = "all" ]
+if [ "$arg" = "phenotypes" ] || [ "$arg" = "all" ] || [ "$arg" = "skipsib" ]
 then
 	section_message "phenotypes"
 	Rscript resources/checks/phenotypes.R \
