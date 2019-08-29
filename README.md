@@ -11,53 +11,6 @@ If siblings have not been previously identified in the dataset, we suggest using
 2) <b> Imputed genotype data</b>. The analysis scripts use best guess genotype data in PLINK binary format. We have provided scripts to convert different file formats (e.g. vcf, bgen) to PLINK binary best guess format satisfying the requirements below. See the wiki for more information.
 3) <b> Phenotypes</b>. Phenotype data for siblings on outcomes of interest (e.g. height and body mass index).
 <br>
-<b> INPUT FILES: </b>
-
-<b> Imputed genotype data:</b> <br/>
-  
-a) PLINK binary format (.bed .bim .fam) with one file containing all 22 autosomes. <br/>
-  
-b) The first two columns of the .fam file must contain the Family ID (FID), common between sibling pairs and distinct between non-sibling pairs, and a unique Individual ID (IID) for each participant. <br/>
-<br/>
-For example, the following IIDs are not unique: <br/>
-Family1 Sibling1 <br/>
-Family1 Sibling2 <br/>
-Family2 Sibling1 <br/>
-Family2 Sibling2 <br/>
-<br/>
-c) The SNP IDs in the second column of the .bim file should be in CHR:BP format with markers labelled as SNP or INDEL.  
-
-For example:  
-
-1       chr1:10177:INDEL        0       10177   AC      A  
-
-1       chr1:10352:INDEL        0       10352   TA      T  
-
-1       chr1:11008:SNP          0       11008   G       C
-  
-  
-d) Genotype data should be on build 37.  
-
-f) Chromosomes should be numbered 1-22 in .bim file.  
-
-g) Filtered variants such that INFO > 0.3 & MAF > 0.01.  
-
-
-<b>Covariate file in tab delimited format. </b> <br/>
-a) First two columns should be FID/IID. <br/>
-b) One column should contain Age (years), labelled as "Age". <br/>
-c) One column should contain Sex, labelled as "Sex". Males should be coded as 1 and females as 0. <br/>
-d) Twenty columns containing the first 20 genomic principal components. <br/>
-
-<b>Phenotype file in tab delimited format. </b> <br/>
-a) First two columns should be FID/IID. <br/>
-b) Rest of columns should contain available phenotypes labelled as follows: "Height" "BMI" "Education" "LDL". <br/>
-
-<b> INFO file in tab delimited format. </b> <br/>
-a) First column should contain variant ID in CHR:BP format described above. <br/>
-b) Second column should be minor allele frequency. <br/>
-c) Third column should be INFO score. <br/>
-No header is required for the INFO file but the SNP names must match the .bim file. <br/>
 
 <b> Downloading and running the pipeline </b>
 
@@ -70,10 +23,6 @@ Once the repository is downloaded, run the following command to check that files
 
 <br>
 
-<b> OUTPUT FILE: </b>
-
-Summary statistics file with: <br/>
-SNP information (CHR, BP, A1, A2, MAF, callrate), betas, standard errors, P-values and variance-covariance matrix coefficients for intercept, WF estimates, BF estimates and total estimates.
 
 <b> SCRIPTS: </b>  
 
