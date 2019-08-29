@@ -96,10 +96,9 @@ Navigate to the directory where you want to download the repository. The reposit
 > git clone https://github.com/LaurenceHowe/SiblingGWAS/ <br>
 <br>
 Once the repository is downloaded, run the following command to check that files have downloaded properly: <br>
-> head ./SiblingGWAS/resources/parameters 
 
+> head ./SiblingGWAS/resources/parameters <br>
 
-<br>
 <br>
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
