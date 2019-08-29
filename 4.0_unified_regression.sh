@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#To run this file on batch 1 for height use the following command:
+# ./4.0_unified_regression.sh 1 Height
+#For more information see the wiki https://github.com/LaurenceHowe/SiblingGWAS/wiki/4.0_unified_regression
+
 set -e
 source ./config
 
