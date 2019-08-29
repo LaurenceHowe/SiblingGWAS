@@ -93,10 +93,10 @@ This script compiles the output into a final summary statistics file.
 <b> Downloading and running the pipeline </b>
 
 Navigate to the directory where you want to download the repository. The repository can then be downloaded using git (if installed): <br>
-git clone https://github.com/LaurenceHowe/SiblingGWAS/ <br>
+> git clone https://github.com/LaurenceHowe/SiblingGWAS/ <br>
 <br>
 Once the repository is downloaded, run the following command to check that files have downloaded properly: <br>
-head ./SiblingGWAS/resources/parameters 
+> head ./SiblingGWAS/resources/parameters 
 
 
 <br>
