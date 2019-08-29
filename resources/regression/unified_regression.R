@@ -1,7 +1,6 @@
 require(data.table)
 require(sandwich)
 require(lmtest)
-require(systemfit)
 require(nlWaldTest)
 
 # import argument
