@@ -12,6 +12,10 @@ If siblings have not been previously identified in the dataset, we suggest using
 3) <b> Phenotypes</b>. Phenotype data for siblings on outcomes of interest (e.g. height and body mass index).
 <br>
 
+For more details on the prerequisites and inputs required for the pipeline, please consult the wiki <br>
+https://github.com/LaurenceHowe/SiblingGWAS/wiki/0.0_Prerequisites
+<br>
+
 <b> Downloading and running the pipeline </b>
 
 Navigate to the directory where you want to download the repository. The repository can then be downloaded using git (if installed): <br>
