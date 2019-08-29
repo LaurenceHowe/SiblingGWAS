@@ -3,6 +3,7 @@
 Scripts for running GWAS using siblings to estimate Within-Family (WF) and Between-Family (BF) effects of genetic variants on continuous traits. Allows the inclusion of more than two siblings from one family.
 <br>
 <br>
+
 <b> Basic Requirements </b>
 
 1) <b> Siblings</b>. The analysis pipeline requires data on siblings. We suggest including all siblings from families with one or more pairs of genotyped dizygotic siblings. For example, in a family with a pair of monozygotic twins and an additional sibling, include both MZ twins and the sibling. The inclusion of both MZ twins should (very) modestly improve power by accounting for variation in the phenotypic outcome.
@@ -58,6 +59,17 @@ b) Second column should be minor allele frequency. <br/>
 c) Third column should be INFO score. <br/>
 No header is required for the INFO file but the SNP names must match the .bim file. <br/>
 
+<b> Downloading and running the pipeline </b>
+
+Navigate to the directory where you want to download the repository. The repository can then be downloaded using git (if installed): <br>
+> git clone https://github.com/LaurenceHowe/SiblingGWAS/ <br>
+<br>
+Once the repository is downloaded, run the following command to check that files have downloaded properly: <br>
+
+> head ./SiblingGWAS/resources/parameters <br>
+
+<br>
+
 <b> OUTPUT FILE: </b>
 
 Summary statistics file with: <br/>
@@ -91,16 +103,7 @@ This script runs the regressions in R.
 This script compiles the output into a final summary statistics file.
 <br>
 <br>
-<b> Downloading and running the pipeline </b>
 
-Navigate to the directory where you want to download the repository. The repository can then be downloaded using git (if installed): <br>
-> git clone https://github.com/LaurenceHowe/SiblingGWAS/ <br>
-<br>
-Once the repository is downloaded, run the following command to check that files have downloaded properly: <br>
-
-> head ./SiblingGWAS/resources/parameters <br>
-
-<br>
 Any queries to Laurence Howe laurence.howe@bristol.ac.uk
 
 Note scripts were adapted from scripts by GoDMC (Gibran Hemani et al) and the SSGAC (Sean Lee/Patrik Turley et al). See the Wiki for more information!
