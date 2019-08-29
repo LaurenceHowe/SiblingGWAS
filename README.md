@@ -7,7 +7,7 @@ Scripts for running GWAS using siblings to estimate Within-Family (WF) and Betwe
 
 1) <b> Siblings</b>. The analysis pipeline requires data on siblings. We suggest including all siblings from families with one or more pairs of genotyped dizygotic siblings. For example, in a family with a pair of monozygotic twins and an additional sibling, include both MZ twins and the sibling. The inclusion of both MZ twins should (very) modestly improve power by accounting for variation in the phenotypic outcome.
 If siblings have not been previously identified in the dataset, we suggest using KING (http://people.virginia.edu/~wc9c/KING/manual.html) to infer siblings.
-2) <b> Imputed genotype data</b>. The analysis scripts use best guess genotype data in PLINK binary format. We have provided scripts to convert different file formats (vcf, bgen) to PLINK binary best guess format satisfying the requirements below. See the wiki for more information.
+2) <b> Imputed genotype data</b>. The analysis scripts use best guess genotype data in PLINK binary format. We have provided scripts to convert different file formats (e.g. vcf, bgen) to PLINK binary best guess format satisfying the requirements below. See the wiki for more information.
 3) <b> Phenotypes</b>. Phenotype data for siblings on outcomes of interest (e.g. height and body mass index).
 <br>
 <b> INPUT FILES: </b>
@@ -56,6 +56,7 @@ b) Rest of columns should contain available phenotypes labelled as follows: "Hei
 a) First column should contain variant ID in CHR:BP format described above. <br/>
 b) Second column should be minor allele frequency. <br/>
 c) Third column should be INFO score. <br/>
+No header is required for the INFO file but the SNP names must match the .bim file. <br/>
 
 <b> OUTPUT FILE: </b>
 
