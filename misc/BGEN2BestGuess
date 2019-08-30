@@ -14,9 +14,11 @@ cp data.sample filtered.sample
  
 In R:
  d<-read.table("data.sample",header=T,stringsAsFactors=F)
- e<-read.table("exclusion.samples.txt",stringsAsFactors=F)
- d2<-d[(which(d[,1]%in%e[,1]==F)),]
- write.table(d2,"filtered.sample",sep=" ",col.names=T,row.names=F,quote=F)
+ e<-read.table("inclusion.samples.txt",stringsAsFactors=F)
+ d2<-d[1,]
+ d3<-d[(which(d[,1]%in%e[,1]==T)),]
+ d4<-rbind(d2,d3)
+ write.table(d4,"filtered.sample",sep=" ",col.names=T,row.names=F,quote=F)
 
 
 #!/bin/bash
