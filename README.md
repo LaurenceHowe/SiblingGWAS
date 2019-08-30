@@ -13,7 +13,7 @@ If siblings have not been previously identified in the dataset, we suggest using
 <br>
 
 For more details on the prerequisites and inputs required for the pipeline, please consult the wiki <br>
-https://github.com/LaurenceHowe/SiblingGWAS/wiki/0.0_Prerequisites
+https://github.com/LaurenceHowe/SiblingGWAS/wiki/
 <br>
 
 <b> Downloading and running the pipeline </b>
