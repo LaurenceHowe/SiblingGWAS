@@ -1,6 +1,6 @@
 #ARGUMENTS
-#1) Path of .bgen files (data.chr{i}.bgen)
-#2) File containing sibling IDs for filtering (Siblings.txt)
+#1) Path of .bgen files: data.chr{i}.bgen, data.sample
+#2) File containing sibling IDs for filtering: Siblings.txt
 
 #Requirements
 #1) Plink 1.90
@@ -10,11 +10,12 @@
 # First copy your sample file to a new file
 cp data.sample filtered.sample
 
-# If you need to filter out samples you need to generate a new sample file.
+#Step 1: Generate new sample file of siblings
+# If you need to restrict to siblings you need to generate a new sample file.
  
-In R:
+#Load R:
  d<-read.table("data.sample",header=T,stringsAsFactors=F)
- e<-read.table("inclusion.samples.txt",stringsAsFactors=F)
+ e<-read.table("Siblings.txt",stringsAsFactors=F)
  d2<-d[1,]
  d3<-d[(which(d[,1]%in%e[,1]==T)),]
  d4<-rbind(d2,d3)
@@ -25,16 +26,16 @@ In R:
 for i in {1..22}
 do
 
-#Extract siblings
+#Step 2: Extract siblings from .bgen files
 qctool -g data.chr${i}.bgen -s data.chr1-22.sample -incl-samples Siblings.txt -og filteredchr${i}.bgen
 
-#Calculate summary data (INFO scores etc)
+#Step 3: Calculate summary data (INFO scores etc)
 qctool -g filteredchr${i}.bgen -s filtered.sample -snp-stats -osnp data_chr${i}.snp-stats
 
-#Extract best-guess data
+#Step 4: Extract best-guess data
 plink --bgen filteredchr${i}.bgen --sample filtered.sample --set-missing-var-ids @:#\$1,\$2 --make-bed --out data_chr${i}_filtered --hard-call-threshold 0.499999
 
-# Rename the SNP IDs if necessary to avoid possible duplicates
+#Step 5: Rename the SNP IDs if necessary to avoid possible duplicates
 cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig
 
 awk '{
@@ -44,7 +45,7 @@ else
    print $1, "chr"$1":"$4":INDEL", $3, $4, $5, $6;
      }' data_chr${i}_filtered.bim.orig > data_chr${i}_filtered.bim
 
-# For simplicity remove any duplicates
+#Step 6: For simplicity remove any duplicates
 cp data_chr${i}_filtered.bim data_chr${i}_filtered.bim.orig2
 awk '{
      if (++dup[$2] > 1) {
@@ -60,13 +61,13 @@ mv data_chr${i}_filtered_2.bed data_chr${i}_filtered.bed
 mv data_chr${i}_filtered_2.bim data_chr${i}_filtered.bim
 mv data_chr${i}_filtered_2.fam data_chr${i}_filtered.fam
 
-# Relabel the SNP IDs and extract relevant columns in the snp-stats file
+#Step 7: Relabel the SNP IDs and extract relevant columns in the snp-stats file
 # Assumes column 4 is the position
 # Assumes columns 5 and 6 are the allele names
 # Assumes column 14 is the MAF
 # Assumes columns 17 is the info score
 
-#Remove lines with #
+#Step 8: Remove lines with #
 
 sed -i '/#/d' data_chr${i}.snp-stats
 
@@ -78,7 +79,7 @@ awk -v chr=$i '{
             }' data_chr${i}.snp-stats > data_chr${i}.info
 
 
-# Remove duplicates from snp-stats
+#Step 9: Remove duplicates from snp-stats
 cp data_chr${i}.info data_chr${i}.info.orig
 awk '{
         if (++dup[$1] > 1) {
@@ -96,7 +97,7 @@ done > mergefile.txt
 
 plink --bfile data_chr1_filtered --merge-list mergefile.txt --make-bed --out temp
 
-# Combine info files into a single file
+#Step 10: Combine info files into a single file
 
 head -n1 chr01_filtered.info > data_filtered.info
 
@@ -106,7 +107,7 @@ do
 done
 
 
-# Prune on INFO 0.8 and MAF 0.01
+#Step 11: Prune on INFO 0.8 and MAF 0.01
 
 awk '$2<0.01 || $3<0.3  {print $1}' data_filtered.info > remove.txt
 
