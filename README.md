@@ -49,7 +49,7 @@ This script partitions the genetic data into smaller lists of SNPs to be run in 
 
 <b> 4.0_unified_regression </b> 
 
-This script runs the regressions in R.
+This script runs the regressions in R. The script fits two models: a conventional regression of genotype on phenotype and a model including the family mean for each genotype to generate Within-Family and Between-Family estimates. Standard errors are adjusted to account for family structure. 
 
 <b> 5.0_tidy </b> 
 
