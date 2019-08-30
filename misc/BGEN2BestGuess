@@ -7,6 +7,8 @@
 #2) QCtool
 #3) R
 
+#Note this script can be edited to run using multiple cores.
+
 # First copy your sample file to a new file
 cp data.sample filtered.sample
 
