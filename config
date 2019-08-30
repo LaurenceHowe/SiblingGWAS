@@ -17,17 +17,13 @@ analyst_email="lh14833@bristol.ac.uk"
 
 home_directory="/mnt/storage/scratch/lh14833/SiblingGWAS"
 
-bfile_raw="/mnt/storage/private/mrcieu/users/lh14833/private/data_filtered"
-covariates="/mnt/storage/home/lh14833/Data/sibling-covariates.txt"
-phenotypes="/mnt/storage/home/lh14833/Data/sibling-phenotypes-updated.txt"
+bfile_raw="data_filtered"
+covariates="sibling-covariates.txt"
+phenotypes="sibling-phenotypes-updated.txt"
 
 # Imputation quality scores
 # This should be a file with three columns, SNP, MAF and quality scores
-quality_scores="/mnt/storage/private/mrcieu/users/lh14833/private/data_filtered.info"
-
-# Parallelisation parameters
-# Number of threads to use per node
-nthreads="16"
+quality_scores="data_filtered.info"
 
 # Splitting data-set into chunks of e.g. 100,000 SNPs to run in batch
 chunks_snp_number="10000"
