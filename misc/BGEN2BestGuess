@@ -1,5 +1,5 @@
 #ARGUMENTS
-#1) Path of .bgen files: data.chr{i}.bgen, data.sample
+#1) Path of .bgen files: data.chr{i}.bgen (where i=1,2,3....22), data.sample
 #2) File containing sibling IDs for filtering: Siblings.txt
 
 #Requirements
