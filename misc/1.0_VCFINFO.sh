@@ -18,14 +18,32 @@ perl get_vcf_chr_pos_info.pl CHR_X.HRC.vcf.gz MAF,R2 > mafinfo.minimac3.chr23.tx
 
 wait
 
-parallel "awk -v chr={1} '{
+# Function to do awk
+
+#doawk() {
+#	chr=$1
+#	awk -v chr=$1 '{
+#	           if (($4 == "A" || $4 == "T" || $4 == "C" || $4=="G") &&  ($5 == "A" || $5 == "T" || $5 == "C" || $5 == "G"))
+#                      print "chr"chr":"$2":SNP", $8, $9;
+#	                 else
+#	              print "chr"chr":"$2":INDEL", $8, $9;
+#	                }' mafinfo.minimac3.chr$chr.txt | perl -pe 's/R2/Info/g'| perl -pe 's/chr[0-9][0-9]\:POS\:INDEL/SNP/g' | perl -pe 's/chr[0-9]\:POS\:INDEL/SNP/g' | awk '$2 > 0.01 && $3>0.8 {print $0}' > data_chr$chr.info
+#	}
+
+#export -f doawk
+
+#parallel doawk ::: {1..23}
+
+for i in {1..23}
+do
+awk -v chr=i '{
            if (($4 == "A" || $4 == "T" || $4 == "C" || $4=="G") &&  ($5 == "A" || $5 == "T" || $5 == "C" || $5 == "G"))
-           print "chr"chr":"$2":SNP", $8, $9;
-           else
-	   print "chr"chr":"$2":INDEL", $8, $9;
-	   }' mafinfo.minimac3.chr{1}.txt |perl -pe 's/R2/Info/g'|perl -pe 's/chr[0-9][0-9]\:POS\:INDEL/SNP/g'|perl -pe 's/chr[0-9]\:POS\:I	NDEL/SNP/g' |awk '$2>0.01 && $3>0.8 {print $0}' > data_chr{1}.info" ::: {1..23}
+		   print "chr"chr":"$2":SNP", $8, $9;
+	   else
+		   print "chr"chr":"$2":INDEL", $8, $9;
+		   	}' mafinfo.minimac3.chr$i.txt | perl -pe 's/R2/Info/g'| perl -pe 's/chr[0-9][0-9]\:POS\:INDEL/SNP/g' | perl -pe 's/chr[0-9]\:POS\:INDEL/SNP/g' | awk '$2 > 0.01 && $3>0.8 {print $0}' > data_chr$i.info
 
-wait
+awk 'NR >1 {print $1}' < data_chr$i.info > data_chr$i.keep
 
-parallel "awk 'NR>1 {print $1}' < data_chr{1}.info > data_chr{1}.keep" ::: {1..23}
+done
 

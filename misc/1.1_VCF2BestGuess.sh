@@ -4,10 +4,13 @@ plink=plink1.9
 # Convert the VCF to PLINK in parrallel and set the file name to 1:23
 
 # CHR1:22
+
 parallel --link plink1.9 --vcf CHR{1}.HRC_WGS.vcf.gz --double-id --make-bed --out data_chr{2}_filtered --noweb ::: {01..22} ::: {1..22} 
 
 #CHR_X
 $plink --vcf CHR_X.HRC.vcf.gz --double-id --make-bed --out data_chr23_filtered --noweb &&
+
+wait
 
 for i in {1..23}
 do
@@ -42,6 +45,7 @@ $plink --bfile data_chr${i}_filtered --exclude duplicates.chr${i}.txt --make-bed
 
 
 # Remove duplicates from maf/info file
+
 cp data_chr${i}.info data_chr${i}.info.orig
 awk '{
        if (++dup[$1] > 1) {
