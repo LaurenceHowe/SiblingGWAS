@@ -145,8 +145,8 @@ for (i in 1:length(phenlist)) {
 	x<-i+2
 	ph[[x]]<-NA
 			
-	msg <- paste0("Phenotype with less than 500 observations:"," ",temp )
-	msg2 <-paste0("Please rerun with the updated phenotype file: ./results/01/updated_phenotypes.txt !")
+	msg <- paste0("Phenotype with less than 500 observations, this phenotype will be set to missing and GWAS should not be run using it:"," ",temp )
+	msg2 <-paste0("Please rerun this step with the updated phenotype file: ./results/01/updated_phenotypes.txt !")
 	warninglist <- c(warninglist, msg)
 	warning("WARNING: ", msg," ",msg2)
 	
