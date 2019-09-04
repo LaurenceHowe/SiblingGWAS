@@ -129,8 +129,8 @@ for (i in 1:length(phenlist)) {
 }
 
 #Identify phenotypes with less than 500 data points and set to missing
+
 message("Checking that all phenotypes have at least 500 observations.")
-check<-NULL
 
 for (i in 1:length(phenlist)) {
 		temp<-paste(phenlist[i])
@@ -146,10 +146,10 @@ for (i in 1:length(phenlist)) {
 	ph[[x]]<-NA
 			
 	msg <- paste0("Phenotype with less than 500 observations"," ",temp )
-	msg <-paste0("Please rerun with the updated phenotype file: ./results/01/updated_phenotypes.txt !")
+	msg2 <-paste0("Please rerun with the updated phenotype file: ./results/01/updated_phenotypes.txt !")
 	warninglist <- c(warninglist, msg)
 	warning("WARNING: ", msg," ",msg2)
-	check<-rbind(check, counts2)
+	
 	}
 	
 	     }	
