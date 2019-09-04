@@ -14,4 +14,6 @@ Rscript resources/summary/summary.R \
 		${phenotype_list} \
 		${covariate_list} \
 		${summary_file}
+		
+echo "Summary data successfully generated!"
 		 
