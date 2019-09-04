@@ -2,8 +2,8 @@
 
 # General details
 
-# Please make sure this is alphanumeric (underscores allowed)
-study_name="UK Biobank"
+# Please make sure this is alphanumeric (underscores allowed but no spaces)
+study_name="UKBiobank"
 
 # Analyst's name
 analyst_name="Laurence Howe"
