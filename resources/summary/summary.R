@@ -16,8 +16,7 @@ cov <-fread(cov_file, h=T)
 plist<-fread(phen_list, h=F)
 clist<-fread(cov_list, h=F)
 
-temp<-paste(outcome)
-phen2<-subset(phen, select=c("IID", temp))
+output<-NULL
 
 for (i in 1:nrow(plist)) {
 phen<-paste(plist[i])
@@ -28,11 +27,38 @@ mean<-mean(ph2$Outcome, na.rm=T)
 sd<-sd(ph2$Outcome, na.rm=T)
 median<-median(ph2$Outcome, na.rm=T)
 
-total<-nrow(ph2)
-miss<-is.na(ph2$Outcome)
-miss2<-as.numeric(summary(miss)[3])
-missing<-miss2/total
+q1 <- as.numeric(summary(ph2$Outcome)[2])
+q3 <- as.numeric(summary(ph2$Outcome)[5])
+min <- as.numeric(summary(ph2$Outcome)[1])
+max <- as.numeric(summary(ph2$Outcome)[6])
 
-stats<-data.frame(phen,mean,sd,median,total,missing)
+miss <- is.na(ph2$Outcome)
+N <- as.numeric(summary(miss)[2])
+
+stats<-data.frame(phen, N, mean, sd, median, min, max, q1, q3)
 output<-rbind(output,stats)
 }
+
+
+for (i in 1:nrow(clist)) {
+phen<-paste(clist[i])
+cov2<-subset(cov, select=c("IID", phen))
+names(cov2)<-c("IID", "Covariate")
+
+mean<-mean(cov2$Covariate, na.rm=T)
+sd<-sd(cov2$Covariate, na.rm=T)
+median<-median(cov2$Covariate, na.rm=T)
+
+q1 <- as.numeric(summary(cov2$Covariate)[2])
+q3 <- as.numeric(summary(cov2$Covariate)[5])
+min <- as.numeric(summary(cov2$Covariate)[1])
+max <- as.numeric(summary(cov2$Covariate)[6])
+  
+miss <- is.na(cov2$Covariate)
+N <- as.numeric(summary(miss)[2])
+
+stats<-data.frame(phen, N, mean, sd, median, min, max, q1, q3)
+output<-rbind(output,stats)
+}
+
+write.table(output, file=out_file, row=F, qu=F)
