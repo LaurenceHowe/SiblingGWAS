@@ -125,12 +125,41 @@ for (i in 1:length(phenlist)) {
 		temp<-paste(phenlist[i])
 		test<-check[which(check$Pheno==temp),]
 		ph[[x]][ph$FID%in%test$FID]<-NA
+}		
 }
 
-#Add path for updated file name
-write.table(ph, file=updated_phenotype_file, quote=F, row=F)		
-}
+#Identify phenotypes with less than 500 data points and set to missing
+message("Checking that all phenotypes have at least 500 observations.")
+check<-NULL
+
+for (i in 1:length(phenlist)) {
+		temp<-paste(phenlist[i])
+		ph2<-subset(ph, select=c("FID", "IID", temp))
+		names(ph2)<-c("FID", "IID", "Phenotype")
 		
+		miss <- is.na(ph2$Phenotype)
+		N <- as.numeric(summary(miss)[2])
+	
+		if(N<500)
+	{
+	x<-i+2
+	ph[[x]]<-NA
+			
+	msg <- paste0("Phenotype with less than 500 observations"," ",temp )
+	msg <-paste0("Please rerun with the updated phenotype file: ./results/01/updated_phenotypes.txt !")
+	warninglist <- c(warninglist, msg)
+	warning("WARNING: ", msg," ",msg2)
+	check<-rbind(check, counts2)
+	}
+	
+	     }	
+		
+
+
+#Output updated phenotype file
+write.table(ph, file=updated_phenotype_file, quote=F, row=F)		
+
+
 if("Height" %in% nom)
 {
 	message("Checking Height")
