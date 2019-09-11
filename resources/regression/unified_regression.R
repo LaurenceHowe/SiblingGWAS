@@ -1,7 +1,6 @@
 require(data.table)
 require(sandwich)
 require(lmtest)
-require(nlWaldTest)
 
 # import argument
 arguments <- commandArgs(trailingOnly = T)
