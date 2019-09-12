@@ -20,7 +20,14 @@ sed -i '1d' ${section_04_dir}/output.*.${gwasoutcome}_results.txt > temp.
 # Merge all files using a temporary file in case there's an error
 cat ${section_04_dir}/header.${gwasoutcome}.txt ${section_04_dir}/output.*.${gwasoutcome}_results.txt > ${section_05_dir}/temporary_file.txt
 
-#Create a temporary file incase errors with the renaming
+#Finalise file
 mv ${section_05_dir}/temporary_file.txt ${section_05_dir}/${study_name}.sumstats.${gwasoutcome}.txt
 
+echo "Combined summary statistics file created!"
+
+echo "Removing batch results files in SiblingGWAS/results/04"...
+
+rm ${section_04_dir}/output.*.${gwasoutcome}_results.txt
+
 echo "All finished!"
+
