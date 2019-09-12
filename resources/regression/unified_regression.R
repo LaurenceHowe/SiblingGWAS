@@ -70,8 +70,8 @@ for (i in 1:length(Variants)) {
     model1 <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
     
     #Save Beta information
-    output$BETA_MODEL1_0<-model1$coefficients[1]
-    output$BETA_TOTAL[i]<-model1$coefficients[2]
+    output$BETA_MODEL1_0[i] <- model1$coefficients[1]
+    output$BETA_TOTAL[i] <- model1$coefficients[2]
     
     # save the variance covariance matrix to cluster SEs by family
     vcv_matrix = vcovCL(model1, cluster=ped3$FID)
