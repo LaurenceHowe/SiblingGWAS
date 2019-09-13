@@ -2,14 +2,14 @@
 
 # Copy perl script to genotypes directory
 
-cp /home/ubuntu/SiblingGWAS/misc/get_vcf_chr_pos_info.pl /home/ubuntu/genotypes/ 
+#1/3cp /home/ubuntu/SiblingGWAS/misc/get_vcf_chr_pos_info.pl /home/ubuntu/genotypes/ 
 
 #CHR1:22
-parallel --link "perl get_vcf_chr_pos_info.pl CHR{1}.HRC_WGS.vcf.gz MAF,R2 > mafinfo.minimac3.chr{2}.txt" ::: {01..22} ::: {1..22}
+#2/3parallel --link "perl get_vcf_chr_pos_info.pl CHR{1}.HRC_WGS.vcf.gz MAF,R2 > mafinfo.minimac3.chr{2}.txt" ::: {01..22} ::: {1..22}
 
 #CHR_X
 
-perl get_vcf_chr_pos_info.pl CHR_X.HRC.vcf.gz MAF,R2 > mafinfo.minimac3.chr23.txt
+#3/3perl get_vcf_chr_pos_info.pl CHR_X.HRC.vcf.gz MAF,R2 > mafinfo.minimac3.chr23.txt
 
 	# Assumes column 2 is the position
     	# Assumes columns 4 and 5 are the allele names
@@ -36,7 +36,7 @@ wait
 
 for i in {1..23}
 do
-awk -v chr=i '{
+awk -v chr=$i '{
            if (($4 == "A" || $4 == "T" || $4 == "C" || $4=="G") &&  ($5 == "A" || $5 == "T" || $5 == "C" || $5 == "G"))
 		   print "chr"chr":"$2":SNP", $8, $9;
 	   else

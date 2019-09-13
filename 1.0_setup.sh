@@ -1,4 +1,5 @@
 #!/bin/bash
+plink=plink1.9
 
 set -e
 source ./config
@@ -79,25 +80,25 @@ fi
 
 #Generate relatedness checks
 
-if [ "$arg" = "rel" ] || [ "$arg" = "all" ]
-then
-	section_message "Relatedness checks"
-	plink \
-	--bfile ${bfile_raw} \
-	--extract ${snplist} \
-	--genome \
-	--rel-check \
-	--out ${section_01_dir}/rel
-fi
+#if [ "$arg" = "rel" ] || [ "$arg" = "all" ]
+#then
+#	section_message "Relatedness checks"
+#	$plink \
+#	--bfile ${bfile_raw} \
+#	--extract ${snplist} \
+#	--genome \
+#	--rel-check \
+#	--out ${section_01_dir}/rel
+#fi
 
 #Sibling checks
 
-if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
-then
-	section_message "Sibling checks"
-	Rscript resources/siblings/checks.R \
-		${section_01_dir}/rel.genome
-fi
+#if [ "$arg" = "siblings" ] || [ "$arg" = "all" ]
+#then
+#	section_message "Sibling checks"
+#	Rscript resources/siblings/checks.R \
+#		${section_01_dir}/rel.genome
+#fi
 
 #Check covariate file
 

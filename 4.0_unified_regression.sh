@@ -31,7 +31,7 @@ echo "Running analysis"
 #Run analysis on partitioned files
 
 #Convert to .raw
-plink \
+${plink} \
 --bfile ${bfile_raw} \
 --allow-no-sex \
 --extract ${section_03_dir}/extract${k} \

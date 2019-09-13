@@ -3,23 +3,22 @@
 # General details
 
 # Please make sure this is alphanumeric (underscores allowed)
-study_name="UK Biobank"
+study_name="HUNT"
 
 # Analyst's name
-analyst_name="Laurence Howe"
+analyst_name="BenBrumpton"
 
 # Analyst's email address
-analyst_email="lh14833@bristol.ac.uk"
+analyst_email="ben.brumpton@ntnu.no"
 
 # Please put the full path to this directory
 # e.g. if the config file path is "/home/Projects/SiblingGWAS/config" 
 #then home_directory="/home/Projects/SiblingGWAS"
 
-home_directory="/mnt/storage/scratch/lh14833/SiblingGWAS"
-
+home_directory="/home/ubuntu/SiblingGWAS"
 bfile_raw="data_filtered"
-covariates="sibling-covariates.txt"
-phenotypes="sibling-phenotypes-updated.txt"
+covariates="sibling-covariates-clean.txt"
+phenotypes="sibling-phenotypes.txt"
 
 # Imputation quality scores
 # This should be a file with three columns, SNP, MAF and quality scores
@@ -27,6 +26,9 @@ quality_scores="data_filtered.info"
 
 # Splitting data-set into chunks of e.g. 100,000 SNPs to run in batch
 chunks_snp_number="10000"
+
+# Set PLINK version
+plink=plink1.9
 
 # DO NOT MODIFY
 
