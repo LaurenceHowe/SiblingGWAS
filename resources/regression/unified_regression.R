@@ -3,6 +3,19 @@ require(sandwich)
 require(lmtest)
 require(nlWaldTest)
 
+# check if openblas installed R
+require(inline)
+
+openblas.set.num.threads <- cfunction(signature(ipt="integer"),
+     body = 'openblas_set_num_threads(*ipt);',
+     otherdefs = c ('extern void openblas_set_num_threads(int);'),
+     libargs = c ('-L/opt/openblas/lib -lopenblas'),
+     language = "C",
+     convention = ".C"
+)
+
+openblas.set.num.threads(1)
+
 # import argument
 arguments <- commandArgs(trailingOnly = T)
 rawfile <- arguments[1]
@@ -11,6 +24,7 @@ phenfile <- arguments[3]
 covfile <- arguments[4]
 outfile <- arguments[5]
 outcome <- arguments[6]
+
 #---------------------------------------------------------------------------------------------#
 # Begin GWAS code:
 #---------------------------------------------------------------------------------------------#
