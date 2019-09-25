@@ -157,6 +157,7 @@ for (i in 1:length(phenlist)) {
 
 
 #Output updated phenotype file
+message("Generating updated phenotype file in ./results/01/.")
 write.table(ph, file=updated_phenotype_file, quote=F, row=F)		
 
 
