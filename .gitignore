@@ -1,0 +1,14 @@
+# Do not track the content of these files
+
+sibling-covariates-clean.txt
+sibling-covariates.txt
+sibling-phenotypes.txt
+data_filtered.bed 
+data_filtered.bim 
+data_filtered.fam 
+data_filtered.info
+results/
+
+
+out.BMI.log
+out3.log
