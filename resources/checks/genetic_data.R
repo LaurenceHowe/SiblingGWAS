@@ -1,5 +1,5 @@
-errorlist<-list()
-warninglist<-list()
+errorlist <- list()
+warninglist <- list()
 
 library(data.table)
 suppressMessages(library(matrixStats))
@@ -11,37 +11,37 @@ quality_file <- as.character(args[3])
 controlsnps_file <- as.character(args[4])
 
 message("Checking bim file: ", bim_file)
-controlsnps <- read.table(controlsnps_file, header=F, stringsAsFactors=F)
+controlsnps <- read.table(controlsnps_file, header = F, stringsAsFactors = F)
 bim <- as.data.frame(fread(bim_file, h=F))
 
 message("Number of SNPs: ", nrow(bim))
 
 #check variants are labelled correctly
 
-rsid<-nrow(subset(bim,grepl("rs", bim$V2)))
+rsid <- nrow(subset(bim, grepl("rs", bim$V2)))
 
-if(rsid>0)
+if(rsid > 0)
 {
 	msg <- paste0("Please convert rsIDs to the following format. e.g. chr1:10177:INDEL")
 	warninglist <- c(warninglist, msg)
 	message("Warning: ", msg)
 }
 
-indel<-subset (bim, grepl("INDEL", bim$V2))
-snp<-subset (bim, grepl("SNP", bim$V2))
+indel <- subset (bim, grepl("INDEL", bim$V2))
+snp <- subset (bim, grepl("SNP", bim$V2))
 
-total<-nrow(indel)+nrow(snp)
+total <- nrow(indel) + nrow(snp)
 
-if(!total==nrow(bim))
+if(! total == nrow(bim))
 {
 	msg <- paste0("All variants must be labelled as either SNP or INDEL. e.g. chr1:10177:INDEL")
 	warninglist <- c(warninglist, msg)
 	message("Warning: ", msg)
 }
 
-chryes<-nrow(subset (bim, grepl("chr", bim$V2)))
+chryes <- nrow(subset (bim, grepl("chr", bim$V2)))
 
-if(chryes==nrow(bim))
+if(! chryes == nrow(bim))
 {
 	msg <- paste0("All variants must be labelled in the following format. e.g. chr1:10177:INDEL")
 	warninglist <- c(warninglist, msg)
@@ -50,7 +50,7 @@ if(chryes==nrow(bim))
 
 # test chr coding
 chrno <- data.frame(table(bim[,1]))
-names(chrno)<-c("CHR", "Freq")
+names(chrno) <- c("CHR", "Freq")
 w <- which(!chrno$CHR %in% as.character(c(1:23)))
 
 print(chrno)
