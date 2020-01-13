@@ -192,7 +192,7 @@ if("BMI" %in% nom)
 	message("Checking BMI")
 	m1<-mean(ph$BMI,na.rm=T)
 	age.mean<-mean(cov$Age,na.rm=T)
-	if((m1<10|m1>35)&age.mean>2)
+	if((m1<10|m1>40)&age.mean>2)
 	{
 	msg <- paste0("please convert BMI units to kg/m2")
 	errorlist <- c(errorlist, msg)
