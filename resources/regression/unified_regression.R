@@ -81,11 +81,7 @@ if(skip_variant) { next }
     # Save the variance covariance matrix to cluster SEs by family
 	# Try and catch errors with generating variance covariance matrix
 
-	skip_variant <- FALSE
-	tryCatch(vcv_matrix = vcovCL(model1, cluster=ped3$FID), error = function(e) { skip_variant <<- TRUE})
-	
-if(skip_variant) { next } 
-
+	vcv_matrix = vcovCL(model1, cluster=ped3$FID)
 
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$VCV_MODEL1_0[i] <-NA
@@ -101,10 +97,8 @@ if(skip_variant) { next }
 	#Derive the clustered SEs for the total effect and P-values
 	#Try and catch errors with clustered standard errors
 
-	skip_variant <- FALSE
-	tryCatch(test_matrix <- coeftest(model1, vcov.=vcv_matrix), error = function(e) { skip_variant <<- TRUE})
-	
-if(skip_variant) { next } 
+	test_matrix <- coeftest(model1, vcov.=vcv_matrix)
+	 
 
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$SE_BETA_MODEL1_0[i] <- NA
