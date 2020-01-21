@@ -70,7 +70,11 @@ for (i in 1:length(Variants)) {
 	# Try and catch errors with regression
 
 	skip_variant <- FALSE
-	tryCatch(model1 <- lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3), error = function(e) { skip_variant <<- TRUE print(e)})
+	tryCatch(model1 <- lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3),
+		 error = function(e){
+			 print(e)
+		         skip_variant <<- TRUE}
+		)
 	
 if(skip_variant) { next } 
     
@@ -116,7 +120,11 @@ if(skip_variant) { next }
 
     # Run unified regression
     skip_variant <- FALSE
-	tryCatch(model2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + CENTREDGENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3), error = function(e) { skip_variant <<- TRUE})
+	tryCatch(model2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + CENTREDGENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3),
+		 error = function(e){ 
+			 print(e)
+			 skip_variant <<- TRUE}
+		)
 
 	if(skip_variant) { next } 
 	
@@ -131,8 +139,12 @@ if(skip_variant) { next }
     
     # save the variance covariance matrix
     skip_variant <- FALSE
-	tryCatch(vcv_matrix = vcovCL(model2, cluster=ped3$FID), error = function(e) { skip_variant <<- TRUE print(e)})
-
+	tryCatch(vcv_matrix = vcovCL(model2, cluster=ped3$FID),
+		error = function(e){
+			print(e)
+			skip_variant <<- TRUE}
+		 )
+		
 	if(skip_variant) { next } 
 	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
@@ -153,7 +165,11 @@ if(skip_variant) { next }
 
     # save the clustered SEs and corresponding P-values for WF/BF
     skip_variant <- FALSE
-	tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix), error = function(e) { skip_variant <<- TRUE print(e)})
+	tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix),
+		 error = function(e){
+			 print(e)
+			 skip_variant <<- TRUE}
+		)
 
 	if(skip_variant) { next } 
 	
