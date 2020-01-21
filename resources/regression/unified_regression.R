@@ -66,15 +66,27 @@ for (i in 1:length(Variants)) {
     #Centre genotype around family mean
     ped3 <- na.omit(ped2[,CENTREDGENOTYPE:=GENOTYPE-FAM_MEAN])
     
-    # Extract total effect
-    model1 <-lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
+	# Extract total effect
+	# Try and catch errors with regression
+
+	skip_variant <- FALSE
+	tryCatch(model1 <- lm(formula = PHENOTYPE ~ GENOTYPE + AGE + SEX +PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3), error = function(e) { skip_variant <<- TRUE})
+	
+if(skip_variant) { next } 
     
     #Save Beta information
     output$BETA_MODEL1_0[i] <- model1$coefficients[1]
     output$BETA_TOTAL[i] <- model1$coefficients[2]
     
-    # save the variance covariance matrix to cluster SEs by family
-    vcv_matrix = vcovCL(model1, cluster=ped3$FID)
+    # Save the variance covariance matrix to cluster SEs by family
+	# Try and catch errors with generating variance covariance matrix
+
+	skip_variant <- FALSE
+	tryCatch(vcv_matrix = vcovCL(model1, cluster=ped3$FID), error = function(e) { skip_variant <<- TRUE})
+	
+if(skip_variant) { next } 
+
+
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$VCV_MODEL1_0[i] <-NA
         output$VCV_MODEL1_0_TOTAL[i] <-NA
@@ -85,9 +97,15 @@ for (i in 1:length(Variants)) {
         output$VCV_MODEL1_TOTAL[i] <- vcv_matrix[2,2]
  
     }
+	
+	#Derive the clustered SEs for the total effect and P-values
+	#Try and catch errors with clustered standard errors
 
-    #Derive the clustered SEs for the total effect and P-values
-    test_matrix <- coeftest(model1, vcov.=vcv_matrix)
+	skip_variant <- FALSE
+	tryCatch(test_matrix <- coeftest(model1, vcov.=vcv_matrix), error = function(e) { skip_variant <<- TRUE})
+	
+if(skip_variant) { next } 
+
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$SE_BETA_MODEL1_0[i] <- NA
         output$SE_BETA_TOTAL[i] <- NA
@@ -103,8 +121,11 @@ for (i in 1:length(Variants)) {
     
 
     # Run unified regression
-    model2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + CENTREDGENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3)
-   
+    skip_variant <- FALSE
+	tryCatch(model2 <- lm(formula = PHENOTYPE ~ FAM_MEAN + CENTREDGENOTYPE + AGE + SEX+PC1+PC2+PC3+PC4+PC5+PC6+PC7+PC8+PC9+PC10+PC11+PC12+PC13+PC14+PC15+PC16+PC17+PC18+PC19+PC20, data=ped3), error = function(e) { skip_variant <<- TRUE})
+
+	if(skip_variant) { next } 
+	
     # Sample size in regression
     output$N_REG[i] <- length(resid(model2))
     
@@ -115,7 +136,11 @@ for (i in 1:length(Variants)) {
     
     
     # save the variance covariance matrix
-    vcv_matrix = vcovCL(model2, cluster=ped3$FID)
+    skip_variant <- FALSE
+	tryCatch(vcv_matrix = vcovCL(model2, cluster=ped3$FID), error = function(e) { skip_variant <<- TRUE})
+
+	if(skip_variant) { next } 
+	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$VCV_MODEL2_0[i] <-NA
         output$VCV_MODEL2_0_BF[i] <-NA
@@ -133,7 +158,11 @@ for (i in 1:length(Variants)) {
     }
 
     # save the clustered SEs and corresponding P-values for WF/BF
-    test_matrix <- coeftest(model2, vcov.=vcv_matrix)
+    skip_variant <- FALSE
+	tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix), error = function(e) { skip_variant <<- TRUE})
+
+	if(skip_variant) { next } 
+	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$SE_BETA_MODEL2_0[i] <- NA
         output$SE_BETA_BF[i] <- NA
