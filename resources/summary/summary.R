@@ -22,12 +22,12 @@ for (i in 1:nrow(plist)) {
 phen<-paste(plist[i])
 ph2<-subset(ph, select=c("IID", phen, "Sex", "Age",
                         "PC1", "PC2", "PC3", "PC4", "PC5",
-                        "PC6", "PC7", "PC8", "PC9", "PC10"
+                        "PC6", "PC7", "PC8", "PC9", "PC10",
                         "PC11", "PC12", "PC13", "PC14", "PC15",
                         "PC16", "PC17", "PC18", "PC19", "PC20"))
 names(ph2)<-c("IID", "Outcome", "Sex", "Age",
                         "PC1", "PC2", "PC3", "PC4", "PC5",
-                        "PC6", "PC7", "PC8", "PC9", "PC10"
+                        "PC6", "PC7", "PC8", "PC9", "PC10",
                         "PC11", "PC12", "PC13", "PC14", "PC15",
                         "PC16", "PC17", "PC18", "PC19", "PC20")
 
