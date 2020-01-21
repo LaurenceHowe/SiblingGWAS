@@ -85,12 +85,13 @@ if(skip_variant) { next }
     # Save the variance covariance matrix to cluster SEs by family
 	# Try and catch errors with generating variance covariance matrix
 
-	tryCatch(vcv_matrix = vcovCL(model1, cluster=ped3$FID),
+	tryCatch(vcv_matrix <- vcovCL(model1, cluster=ped3$FID),
 		 error = function (e){
 			 print(e)
 			 skip_variant <<-TRUE}
 		 )
-
+if(skip_variant) { next } 
+	
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$VCV_MODEL1_0[i] <-NA
         output$VCV_MODEL1_0_TOTAL[i] <-NA
@@ -105,9 +106,13 @@ if(skip_variant) { next }
 	#Derive the clustered SEs for the total effect and P-values
 	#Try and catch errors with clustered standard errors
 
-	test_matrix <- coeftest(model1, vcov.=vcv_matrix)
-	 
-
+	tryCatch(test_matrix <- coeftest(model1, vcov.=vcv_matrix),
+		 error = function (e){
+			 print(e)
+			 skip_variant <<-TRUE}
+		 )
+	 if(skip_variant) { next } 
+	
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$SE_BETA_MODEL1_0[i] <- NA
         output$SE_BETA_TOTAL[i] <- NA
@@ -142,8 +147,12 @@ if(skip_variant) { next }
     
     
     # save the variance covariance matrix
-   vcv_matrix = vcovCL(model2, cluster=ped3$FID)
-		
+   tryCatch(vcv_matrix <- vcovCL(model2, cluster=ped3$FID),
+	    error = function(e){
+		    print(e)
+		    skip_variant <<- TRUE}
+	    )
+		if(skip_variant) { next } 
 	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$VCV_MODEL2_0[i] <-NA
@@ -162,7 +171,13 @@ if(skip_variant) { next }
     }
 
     # save the clustered SEs and corresponding P-values for WF/BF
-    test_matrix <- coeftest(model2, vcov.=vcv_matrix)
+    tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix),
+	     error = function(e){
+		     print(e)
+		     skip_variant <<-TRUE}
+	     )
+	if(skip_variant) { next } 
+		    
 	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$SE_BETA_MODEL2_0[i] <- NA
