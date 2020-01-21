@@ -138,14 +138,8 @@ if(skip_variant) { next }
     
     
     # save the variance covariance matrix
-    skip_variant <- FALSE
-	tryCatch(vcv_matrix = vcovCL(model2, cluster=ped3$FID),
-		error = function(e){
-			print(e)
-			skip_variant <<- TRUE}
-		 )
+   vcv_matrix = vcovCL(model2, cluster=ped3$FID)
 		
-	if(skip_variant) { next } 
 	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$VCV_MODEL2_0[i] <-NA
@@ -164,14 +158,7 @@ if(skip_variant) { next }
     }
 
     # save the clustered SEs and corresponding P-values for WF/BF
-    skip_variant <- FALSE
-	tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix),
-		 error = function(e){
-			 print(e)
-			 skip_variant <<- TRUE}
-		)
-
-	if(skip_variant) { next } 
+    test_matrix <- coeftest(model2, vcov.=vcv_matrix)
 	
     if(  is.na(output$BETA_MODEL2_0[i]) | is.na(output$BETA_BF[i]) | is.na(output$BETA_WF[i]) ) {
         output$SE_BETA_MODEL2_0[i] <- NA
