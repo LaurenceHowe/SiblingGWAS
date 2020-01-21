@@ -12,15 +12,17 @@ cov_list <- as.character(args[4])
 out_file <- as.character(args[5])
 
 ph <- fread(phenotype_file, h=T)
-cov <-fread(cov_file, h=T)
-plist<-fread(phen_list, h=F)
-clist<-fread(cov_list, h=F)
+cov <- fread(cov_file, h=T)
+plist <- fread(phen_list, h=F)
+clist <- fread(cov_list, h=F)
 
 output<-NULL
 
 for (i in 1:nrow(plist)) {
-phen<-paste(plist[i])
-ph2<-subset(ph, select=c("IID", phen, "Sex", "Age",
+phen <- paste(plist[i])
+merge <- merge(ph, cov, by = "IID")
+  
+ph2 <- subset(merge, select=c("IID", phen, "Sex", "Age",
                         "PC1", "PC2", "PC3", "PC4", "PC5",
                         "PC6", "PC7", "PC8", "PC9", "PC10",
                         "PC11", "PC12", "PC13", "PC14", "PC15",
