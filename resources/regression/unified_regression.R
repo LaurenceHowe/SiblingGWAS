@@ -131,7 +131,7 @@ if(skip_variant) { next }
     
     # save the variance covariance matrix
     skip_variant <- FALSE
-	tryCatch(vcv_matrix = vcovCL(model2, cluster=ped3$FID), error = function(e) print(sys.calls()) { skip_variant <<- TRUE})
+	tryCatch(vcv_matrix = vcovCL(model2, cluster=ped3$FID), error = function(e) { skip_variant <<- TRUE} print(sys.calls()))
 
 	if(skip_variant) { next } 
 	
@@ -153,7 +153,7 @@ if(skip_variant) { next }
 
     # save the clustered SEs and corresponding P-values for WF/BF
     skip_variant <- FALSE
-	tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix), error = function(e) print(sys.calls()) { skip_variant <<- TRUE})
+	tryCatch(test_matrix <- coeftest(model2, vcov.=vcv_matrix), error = function(e) { skip_variant <<- TRUE}print(sys.calls()))
 
 	if(skip_variant) { next } 
 	
