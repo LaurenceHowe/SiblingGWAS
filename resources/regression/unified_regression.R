@@ -53,7 +53,7 @@ SNPs<- grep("SNP", colnames(ped), value = T)
 INDELs <- grep("INDEL", colnames(ped), value=T)
 Variants<-c(SNPs, INDELs)
 
-for (i in 1:length(Variants)) {
+for (i in 1:30) {
     # Calculate the Callrate: for how many sibs the SNP is available
     snp_ind <- i+6 
 
@@ -85,7 +85,11 @@ if(skip_variant) { next }
     # Save the variance covariance matrix to cluster SEs by family
 	# Try and catch errors with generating variance covariance matrix
 
-	vcv_matrix = vcovCL(model1, cluster=ped3$FID)
+	tryCatch(vcv_matrix = vcovCL(model1, cluster=ped3$FID),
+		 error = function (e){
+			 print(e)
+			 skip_variant <<-TRUE}
+		 )
 
     if(  is.na(output$BETA_MODEL1_0[i]) | is.na(output$BETA_TOTAL[i])) {
         output$VCV_MODEL1_0[i] <-NA
