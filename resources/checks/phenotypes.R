@@ -56,13 +56,7 @@ if(names(ph)[2] !="IID")
 	warning("ERROR: ", msg)
 	}
 
-nom <- names(ph)[-1][names(ph)[-1] %in% c("BMI", "Height", "Education")]
-if(length(nom)<1)
-	{
-	msg <-paste0("Neither Height nor BMI nor Education are present in the phenotype file. Please check that the columns are labelled correctly")
-	errorlist <-c(errorlist,msg)
-	warning("ERROR: ", msg)
-	}
+
 
 
 #Check genotype file
