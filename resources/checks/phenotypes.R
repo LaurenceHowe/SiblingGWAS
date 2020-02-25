@@ -56,7 +56,7 @@ if(names(ph)[2] !="IID")
 	warning("ERROR: ", msg)
 	}
 
-
+nom <- names(ph)[-1][names(ph)[-1] %in% c("BMI", "Height", "Education")]
 
 
 #Check genotype file
