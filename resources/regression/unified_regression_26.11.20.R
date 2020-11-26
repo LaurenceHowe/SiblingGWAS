@@ -24,15 +24,18 @@ bim <- fread(bimfile)
 
 paste0("Loading phenotype data")
 phen <- fread(phenfile)
-temp<-paste(outcome)
-phen2<-subset(phen, select=c("FID", "IID", temp))
-names(phen2)<-c("FID", "IID", "Outcome")
+temp <- paste(outcome)
+phen2 <- subset(phen, select=c("FID", "IID", temp))
+names(phen2) <- c("FID", "IID", "Outcome")
+
+#New restrict to complete cases of phenotype
+phen3 <- phen2[complete.cases(phen2$Outcome), ]
 
 paste0("Loading covariate data")
 cov <- fread(covfile)
 
-phencov<-merge(phen2,cov,by=c("FID", "IID"))
-ped<-merge(raw,phencov, by=c("FID", "IID"))
+phencov <- merge(phen3, cov, by = c("FID", "IID"))
+ped <- merge(raw, phencov, by = c("FID", "IID"))
 
 # Create a new data.frame which will be filled with all necessary output information
 output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_REG=NA,
@@ -40,7 +43,8 @@ output <- data.frame(CHR=bim$V1, SNP=bim$V2, BP=bim$V4, A1=bim$V5, A2=bim$V6, N_
                      SE_BETA_MODEL1_0=NA, SE_BETA_MODEL2_0=NA, SE_BETA_TOTAL=NA, SE_BETA_BF=NA, SE_BETA_WF=NA,
                      P_BETA_MODEL1_0=NA, P_BETA_MODEL2_0=NA, P_BETA_TOTAL=NA, P_BETA_BF=NA, P_BETA_WF=NA,
                      VCV_MODEL1_0=NA, VCV_MODEL1_0_TOTAL=NA, VCV_MODEL1_TOTAL=NA, 
-                     VCV_MODEL2_0=NA, VCV_MODEL2_0_BF=NA, VCV_MODEL2_0_WF=NA, VCV_MODEL2_BF=NA, VCV_MODEL2_BF_WF=NA, VCV_MODEL2_WF=NA)
+                     VCV_MODEL2_0=NA, VCV_MODEL2_0_BF=NA, VCV_MODEL2_0_WF=NA, VCV_MODEL2_BF=NA, VCV_MODEL2_BF_WF=NA, VCV_MODEL2_WF=NA,
+		     WFM_Mean=NA, WFM_SD=NA, CG_Mean=NA, CG_SD=NA, SE_TOTAL_RAW=NA, SE_WF_RAW=NA)
 
 #---------------------------------------------------------------------------------------------#
 # Loop over all SNPs in the partition
@@ -49,9 +53,9 @@ paste0("Looping...")
 ptm <- proc.time()
 
 # loop over all SNPs
-SNPs<- grep("SNP", colnames(ped), value = T)
+SNPs <- grep("SNP", colnames(ped), value = T)
 INDELs <- grep("INDEL", colnames(ped), value=T)
-Variants<-c(SNPs, INDELs)
+Variants <- c(SNPs, INDELs)
 
 for (i in 1:length(Variants)) {
     # Calculate the Callrate: for how many sibs the SNP is available
@@ -66,6 +70,12 @@ for (i in 1:length(Variants)) {
     #Centre genotype around family mean
     ped3 <- na.omit(ped2[,CENTREDGENOTYPE:=GENOTYPE-FAM_MEAN])
     
+	#New information to extract
+	output$WFM_Mean[i] <- mean(ped3$FAM_MEAN, na.rm = T)
+	output$WFM_SD[i] <- sd(ped3$FAM_MEAN, na.rm = T)
+	output$CG_Mean[i] <- mean(ped3$CENTREDGENOTYPE, na.rm = T)
+	output$CG_SD[i] <- sd(ped3$CENTREDGENOTYPE, na.rm = T)
+	
 	# Extract total effect
 	# Try and catch errors with regression
 
@@ -81,6 +91,10 @@ if(skip_variant) { next }
     #Save Beta information
     output$BETA_MODEL1_0[i] <- model1$coefficients[1]
     output$BETA_TOTAL[i] <- model1$coefficients[2]
+	
+	#New: extract unclustered SE
+    output$SE_TOTAL_RAW[i] <- summary(model1)$coefficients[2,2]
+
     
     # Save the variance covariance matrix to cluster SEs by family
 	# Try and catch errors with generating variance covariance matrix
@@ -144,6 +158,9 @@ if(skip_variant) { next }
     output$BETA_MODEL2_0[i] <- model2$coefficients[1]
     output$BETA_BF[i] <- model2$coefficients[2]
     output$BETA_WF[i] <- model2$coefficients[3]
+	
+	#New: extract unclustered SE
+    output$SE_WF_RAW[i] <- summary(model2)$coefficients[3,2]
     
     
     # save the variance covariance matrix
