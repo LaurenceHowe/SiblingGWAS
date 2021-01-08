@@ -62,6 +62,7 @@ j=$(sed -n "${i}p" $phenlist)
 
 plink \
 --bfile $bfile \
+--nonfounders \
 --keep $folder$j.txt \
 --mpheno 1 \
 --freq \
